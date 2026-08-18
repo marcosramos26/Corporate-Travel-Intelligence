@@ -2,7 +2,7 @@
 
 Case de Business Intelligence aplicado à gestão de viagens corporativas, construído em Power BI no formato PBIP/PBIR a partir de dados sintéticos e regras de tratamento auditáveis.
 
-![Visão Executiva](assets/dashboard_visao_executiva.png)
+![Visão Executiva](assets/dashboard_visao_executiva_clean.png)
 
 ## Visão Geral
 
@@ -108,7 +108,7 @@ Detalhes em [docs/pbir_automation.md](docs/pbir_automation.md).
 ├── Corporate_Travel_Intelligence.SemanticModel/
 ├── *_raw.csv
 ├── assets/
-│   └── dashboard_visao_executiva.png
+│   └── dashboard_visao_executiva_clean.png
 ├── scripts/
 │   └── generate_synthetic_data.py
 ├── docs/
