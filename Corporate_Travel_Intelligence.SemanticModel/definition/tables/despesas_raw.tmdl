@@ -42,11 +42,6 @@ table despesas_raw
 		summarizeBy: none
 		sourceColumn: data_despesa
 
-		variation Variation
-			isDefault
-			relationship: 2cc0e8b8-eca9-4cf8-8cb6-493b14bd5c1c
-			defaultHierarchy: LocalDateTable_3d513005-4b36-4070-b10c-bb528e51fc92.'Hierarquia de datas'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date

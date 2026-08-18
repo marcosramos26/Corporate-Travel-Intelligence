@@ -31,6 +31,8 @@ Visuais confirmados na página:
 | `f2664c4c49bff477becf` | `shape` | Título/subtítulo do header |
 | `61306605f3ed82c8e18e`, `09492050012310606e0b`, `78bb94c6ab42a69d1ac2`, `7a39881df5606a5317c5`, `ae6e6bc5a6ace441df10` | `image` | Ícones dos KPIs |
 
+Após a limpeza de portfólio, a página vazia `Página 1` foi removida do PBIR.
+
 ## Propriedades Manipuladas
 
 Na rodada visual do projeto, foram usadas propriedades nativas de PBIR relacionadas a:

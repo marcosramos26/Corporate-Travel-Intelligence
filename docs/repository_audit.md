@@ -8,19 +8,20 @@ Data da auditoria: 18/08/2026.
 - `Corporate_Travel_Intelligence.Report/`
 - `Corporate_Travel_Intelligence.SemanticModel/`
 - `aereo_raw.csv`
+- `assets/dashboard_visao_executiva.png`
 - `centros_custo_raw.csv`
 - `despesas_raw.csv`
 - `hospedagem_raw.csv`
 - `orcamento_raw.csv`
 - `viagens_raw.csv`
 - `viajantes_raw.csv`
-- `Captura de tela 2026-08-18 103030.png`
+- `scripts/generate_synthetic_data.py`
 - `.gitignore`
 - `backups/`
 
 ## Git
 
-Não foi encontrado diretório `.git` na pasta local auditada. O link informado para publicação é:
+O repositório local foi inicializado e publicado no GitHub informado:
 
 `https://github.com/marcosramos26/Corporate-Travel-Intelligence.git`
 
@@ -38,7 +39,7 @@ Sete CSVs brutos foram confirmados na raiz do projeto:
 
 ## Scripts Python
 
-Não foram encontrados scripts Python (`*.py`) ou notebooks (`*.ipynb`) na pasta local auditada.
+Foi adicionado `scripts/generate_synthetic_data.py` para gerar novas bases sintéticas com contrato semelhante aos CSVs publicados.
 
 ## Power Query
 
@@ -57,7 +58,6 @@ Tabelas confirmadas:
 - `viajantes_raw`
 - `DimData`
 - `_Medidas`
-- tabelas locais automáticas de data geradas pelo Power BI.
 
 ## Medidas
 
@@ -68,13 +68,12 @@ Foram confirmadas 21 medidas DAX na tabela `_Medidas`.
 Páginas confirmadas no PBIR:
 
 - `01 - Visão Executiva`
-- `Página 1`
 
 ## Assets
 
 Assets confirmados:
 
-- Screenshot na raiz: `Captura de tela 2026-08-18 103030.png`
+- Screenshot em `assets/dashboard_visao_executiva.png`
 - Ícones em `Corporate_Travel_Intelligence.Report/StaticResources/RegisteredResources/`
 - Tema em `Corporate_Travel_Intelligence.Report/StaticResources/SharedResources/BaseThemes/CY26SU07.json`
 
@@ -84,12 +83,12 @@ Antes desta rodada, não foram encontrados arquivos `.md` de documentação dent
 
 ## Inconsistências e Pontos de Atenção
 
-- A pasta local não está inicializada como Git, apesar de haver repositório GitHub informado.
+- A pasta local está inicializada como Git e conectada ao repositório GitHub informado.
 - As consultas M usam caminhos absolutos locais para os CSVs.
 - Existem backups de edição visual em `backups/`; são úteis localmente, mas não devem ser publicados no GitHub.
 - Foi encontrado um arquivo `.pbix` fora da pasta auditada. Ele não faz parte da estrutura local documentada para o repositório.
 - Os CSVs brutos preservam problemas de qualidade por desenho do case; a camada tratada fica no Power Query.
-- Há tabelas locais automáticas de data além da `DimData`.
+- As tabelas locais automáticas de data foram removidas para privilegiar a `DimData`.
 
 ## Arquivos que Não Deveriam Ir para Git
 

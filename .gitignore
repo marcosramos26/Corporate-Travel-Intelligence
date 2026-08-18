@@ -15,3 +15,10 @@ Desktop.ini
 .DS_Store
 *.tmp
 *.bak
+
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+
+# Default output from the synthetic data generator
+data/generated/

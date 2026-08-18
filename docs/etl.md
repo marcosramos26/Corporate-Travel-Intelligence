@@ -2,6 +2,8 @@
 
 As transformações abaixo foram confirmadas nas partitions M dos arquivos TMDL do modelo semântico. O objetivo é documentar decisões relevantes, não cada clique do Power Query.
 
+O repositório também inclui `scripts/generate_synthetic_data.py`, um gerador Python determinístico para criar novas bases sintéticas com o mesmo contrato de colunas. Ele escreve por padrão em `data/generated`, evitando sobrescrever os CSVs usados pelo PBIP.
+
 ## Visão Geral
 
 | Tabela | Problema | Transformação | Impacto |

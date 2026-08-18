@@ -7,7 +7,7 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBI_QueryOrder = ["aereo_raw","centros_custo_raw","despesas_raw","hospedagem_raw","orcamento_raw","viagens_raw","viajantes_raw"]
 
@@ -16,15 +16,9 @@ annotation PBI_ProTooling = ["DevMode"]
 ref table aereo_raw
 ref table centros_custo_raw
 ref table despesas_raw
-ref table DateTableTemplate_105b49ef-9c2b-465c-a139-0b5d8ba4cf6a
-ref table LocalDateTable_3d513005-4b36-4070-b10c-bb528e51fc92
 ref table hospedagem_raw
 ref table orcamento_raw
 ref table viagens_raw
-ref table LocalDateTable_5337b5ec-2e16-4164-83bf-4b0539bc17ee
-ref table LocalDateTable_1b937cf7-8fce-4ef3-8997-92193aef109c
-ref table LocalDateTable_2b41b0f3-2304-483c-9e4d-dffb60c76f68
-ref table LocalDateTable_ea22fcf5-ff4d-4af4-af15-c26763394218
 ref table viajantes_raw
 ref table DimData
 ref table _Medidas

@@ -2,7 +2,7 @@
 
 Case de Business Intelligence aplicado à gestão de viagens corporativas, construído em Power BI no formato PBIP/PBIR a partir de dados sintéticos e regras de tratamento auditáveis.
 
-![Visão Executiva](Captura%20de%20tela%202026-08-18%20103030.png)
+![Visão Executiva](assets/dashboard_visao_executiva.png)
 
 ## Visão Geral
 
@@ -27,7 +27,6 @@ Viagens corporativas costumam envolver múltiplas fontes, centros de custo, áre
 Página confirmada no PBIR:
 
 - `01 - Visão Executiva`: visão executiva com KPIs, evolução mensal, gasto por área, desvio por área e filtros de Área e Período.
-- `Página 1`: página adicional presente no projeto, sem documentação analítica confirmada.
 
 Principais componentes da página executiva:
 
@@ -78,7 +77,7 @@ Após as regras aplicadas no Power Query, foram confirmadas chaves distintas de 
 
 ## ETL e Qualidade
 
-As consultas M aplicam conversão de tipos, localidade `en-US` para campos numéricos, tratamento de datas inválidas, remoção de duplicidades, padronização textual e preenchimento controlado de campos ausentes.
+As consultas M aplicam conversão de tipos, localidade `en-US` para campos numéricos, tratamento de datas inválidas, remoção de duplicidades, padronização textual e preenchimento controlado de campos ausentes. O repositório também inclui um gerador Python determinístico para criar novas bases sintéticas com o mesmo contrato de colunas.
 
 Detalhes em [docs/etl.md](docs/etl.md).
 
@@ -108,7 +107,10 @@ Detalhes em [docs/pbir_automation.md](docs/pbir_automation.md).
 ├── Corporate_Travel_Intelligence.Report/
 ├── Corporate_Travel_Intelligence.SemanticModel/
 ├── *_raw.csv
-├── Captura de tela 2026-08-18 103030.png
+├── assets/
+│   └── dashboard_visao_executiva.png
+├── scripts/
+│   └── generate_synthetic_data.py
 ├── docs/
 └── README.md
 ```
@@ -121,6 +123,18 @@ Detalhes em [docs/pbir_automation.md](docs/pbir_automation.md).
 4. Atualize os dados.
 5. Abra a página `01 - Visão Executiva`.
 
+Para gerar uma nova amostra sintética sem sobrescrever os CSVs publicados:
+
+```bash
+python scripts/generate_synthetic_data.py
+```
+
+Para gerar diretamente na raiz do projeto, use conscientemente:
+
+```bash
+python scripts/generate_synthetic_data.py --output-dir . --overwrite
+```
+
 ## Tecnologias
 
 - Power BI Desktop
@@ -129,6 +143,7 @@ Detalhes em [docs/pbir_automation.md](docs/pbir_automation.md).
 - PBIP / PBIR / JSON
 - TMDL
 - CSV
+- Python
 - Git/GitHub
 - Codex/IA aplicada ao fluxo de documentação e ajuste visual
 

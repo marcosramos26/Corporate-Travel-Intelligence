@@ -38,7 +38,7 @@ Decisão: criar `DimData` calculada de 01/01/2024 a 31/12/2025.
 
 Motivo: controlar eixos de tempo e comparação mensal.
 
-Trade-offs: ainda existem tabelas locais automáticas de data no modelo, que podem ser desabilitadas futuramente para reduzir ruído.
+Trade-offs: datas secundárias sem relacionamento direto com `DimData` exigem modelagem explícita caso virem análises principais.
 
 ## ADR-005 — Desvio como Realizado Menos Orçado
 
@@ -109,3 +109,23 @@ Decisão: manter o projeto em PBIP/PBIR.
 Motivo: permite versionar páginas, visuais e formatações em JSON.
 
 Trade-offs: requer cuidado para não alterar bindings, medidas ou interações por acidente.
+
+## ADR-012 — Gerador Python Publicado
+
+Contexto: o dataset foi criado por código, mas o repositório precisava evidenciar essa capacidade técnica.
+
+Decisão: adicionar `scripts/generate_synthetic_data.py`.
+
+Motivo: permitir reprodução de novas amostras sintéticas com contrato de colunas semelhante, sem depender de dados reais.
+
+Trade-offs: o script gera uma nova amostra sintética equivalente; ele não tenta reconstruir byte a byte os CSVs já publicados.
+
+## ADR-013 — Auto Date/Time Desativado
+
+Contexto: o modelo já possui `DimData` própria.
+
+Decisão: remover tabelas locais automáticas de data e desligar a anotação `__PBI_TimeIntelligenceEnabled`.
+
+Motivo: reduzir ruído no modelo e reforçar a modelagem temporal explícita.
+
+Trade-offs: qualquer análise futura usando datas secundárias deve criar relacionamento ou medida adequada de forma intencional.

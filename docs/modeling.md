@@ -31,7 +31,7 @@ O modelo combina tabelas factuais de viagens, despesas, aéreo, hospedagem e or�
 | `viagens_raw[data_ida]` | `DimData[Data]` | Data principal da viagem |
 | `orcamento_raw[mes_referencia]` | `DimData[Data]` | Comparação temporal orçamento x realizado |
 
-Também existem tabelas locais automáticas de data relacionadas a campos como `data_solicitacao`, `data_aprovacao`, `data_volta`, `data_compra` e `data_despesa`, porque a opção de inteligência temporal automática está habilitada no modelo.
+O Auto Date/Time foi desativado no TMDL, removendo as tabelas locais automáticas de data. O modelo passa a depender da `DimData` explícita para análise temporal principal.
 
 ## DimData
 
@@ -47,9 +47,10 @@ Também existem tabelas locais automáticas de data relacionadas a campos como `
 - Medidas centralizadas na tabela `_Medidas` para facilitar manutenção e leitura.
 - `Desvio R$ = [Gasto Total] - [Orçado]`, portanto valor positivo representa estouro de orçamento e valor negativo representa economia.
 - Uso de `DimData` para alinhar realizado e orçamento no mesmo eixo temporal.
+- Auto Date/Time desativado para reduzir ruído e privilegiar calendário controlado.
 - Modelo mantido simples para clareza semântica e uso como case de portfólio.
 
 ## Pontos de Atenção
 
 - As consultas usam caminhos absolutos para os CSVs, o que pode exigir ajuste ao clonar o repositório.
-- Existem tabelas locais automáticas de data além da `DimData`; isso não impede o funcionamento, mas pode ser revisado futuramente para reduzir ruído no modelo.
+- Ao abrir o projeto no Power BI Desktop, valide se as configurações do arquivo mantiveram o Auto Date/Time desligado.

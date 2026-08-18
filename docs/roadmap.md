@@ -10,12 +10,15 @@
 - Medidas DAX executivas, financeiras, operacionais e de compliance.
 - Página `01 - Visão Executiva`.
 - Redesign visual da página executiva em PBIR.
+- Remoção da página vazia do PBIR.
+- Desativação do Auto Date/Time e remoção das tabelas locais automáticas.
+- Gerador Python de dados sintéticos.
 - Documentação técnica e de portfólio.
 
 ## Em Andamento
 
 - Validação visual final no Power BI Desktop após os ajustes de layout.
-- Preparação para publicação no GitHub.
+- Ajuste dos caminhos absolutos das fontes CSV para maior portabilidade.
 
 ## Planejado
 
