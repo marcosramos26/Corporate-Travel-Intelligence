@@ -1,0 +1,211 @@
+table _Medidas
+	lineageTag: 2c16fa34-7598-4139-ae7a-fc5b0befd88b
+
+	measure 'Gasto Total' =
+			
+			SUM(viagens_raw[gasto_total_realizado])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 074df4b5-e0d9-46b8-a61d-cad7a3f308c3
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure Orçado =
+			
+			SUM(orcamento_raw[orcado])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 4dffde47-5ce2-47bc-8622-fbae1aac691f
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Desvio R$' =
+			
+			[Gasto Total] - [Orçado]
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: e7210f33-66ab-4889-a401-591c116d6244
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-US"}
+
+	measure 'Desvio %' =
+			
+			DIVIDE(
+			    [Desvio R$],
+			    [Orçado],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0ffcb23d-b31f-4219-95d9-429cff29567b
+
+	measure 'Qtd Viagens' =
+			
+			DISTINCTCOUNT(viagens_raw[viagem_id])
+		formatString: #,0
+		lineageTag: 4eeaaa85-a45b-4537-a337-ae1b3934059f
+
+	measure 'Ticket Médio' =
+			
+			DIVIDE(
+			    [Gasto Total],
+			    [Qtd Viagens],
+			    0
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 07b9f30e-c4b9-4e1d-92f3-ef54ec2bbec9
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Saving Estimado' =
+			
+			SUM(viagens_raw[saving_estimado])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 16ed390f-e9da-4edb-8235-ee511e61e711
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Taxa Fora da Política' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        [Qtd Viagens],
+			        viagens_raw[fora_politica] = TRUE()
+			    ),
+			    [Qtd Viagens],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 616bcba2-586a-4f71-9c70-389cb3d644f3
+
+	measure 'Antecedência Média' =
+			
+			AVERAGE(viagens_raw[antecedencia_dias])
+		formatString: 0.0
+		lineageTag: 3d5f995d-125f-461a-95cc-c73469053e4f
+
+	measure '% Compras < 7 dias' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        [Qtd Viagens],
+			        viagens_raw[antecedencia_dias] < 7
+			    ),
+			    [Qtd Viagens],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0b2122cc-2e11-4442-a9c9-a03b37db3519
+
+	measure 'Tempo Médio Aprovação' =
+			
+			AVERAGE(viagens_raw[tempo_aprovacao_horas])
+		formatString: 0.0
+		lineageTag: 49967af4-00fb-456f-b7d1-8c76d3362f3f
+
+	measure 'Tarifa Média Aérea' =
+			
+			AVERAGE(aereo_raw[valor_aereo_realizado])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: a8654825-f332-4eaf-bf8e-5700f99ae6b6
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Diária Média Hotel' =
+			
+			AVERAGE(hospedagem_raw[valor_diaria])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 42b17cd0-af7d-414f-9ab9-143807398bae
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-US"}
+
+	measure 'Taxa de Remarcação' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        [Qtd Viagens],
+			        viagens_raw[remarcada] = TRUE()
+			    ),
+			    [Qtd Viagens],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b080104c-7520-4cc3-821f-d86d0b6995ba
+
+	measure 'Taxa de Cancelamento' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS(aereo_raw),
+			        aereo_raw[cancelada] = TRUE()
+			    ),
+			    COUNTROWS(aereo_raw),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e56ec939-1751-466d-8c8a-655a080dfb12
+
+	measure 'Noites Médias' =
+			
+			AVERAGE(hospedagem_raw[diarias])
+		formatString: 0.0
+		lineageTag: d606f7d5-1bd2-48da-9c01-83c7ee32637a
+
+	measure 'Gasto Médio Reembolso' =
+			
+			AVERAGE(viagens_raw[valor_despesas_reembolsaveis])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: d290e0ee-8ff2-4e8c-acd6-73dd66cb6298
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Gasto Fora da Política' =
+			
+			CALCULATE(
+			    [Gasto Total],
+			    viagens_raw[fora_politica] = TRUE()
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 5f3f611d-4e1a-4630-b758-19eb84f0009a
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Custo Remarcações' =
+			
+			SUM(aereo_raw[taxa_remarcacao])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: e6044a74-4314-47f5-b885-17091bb45e99
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Custo Cancelamentos' =
+			
+			SUM(aereo_raw[taxa_cancelamento])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: c54b5d4e-ccc5-4cbe-b85b-c30ec9aeb939
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Saving %' =
+			
+			DIVIDE(
+			    [Saving Estimado],
+			    SUM(viagens_raw[valor_referencia]),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c2ced0a1-354c-40e9-95a0-3feb28814052
+
+	column Column
+		formatString: 0
+		lineageTag: b963e562-5d5e-4764-bd5b-28a65655491b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Medidas = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 229748b824334dd59083967a46e8f328
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

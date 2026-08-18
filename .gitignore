@@ -1,0 +1,17 @@
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Power BI local/runtime artifacts
+**/.pbi/
+*.pbix
+*.pbit
+
+# Local backups generated during PBIR visual editing
+backups/
+
+# OS/editor/cache artifacts
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.tmp
+*.bak

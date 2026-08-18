@@ -1,0 +1,491 @@
+table viagens_raw
+	lineageTag: 9286926f-39f4-415b-b884-530d314fb4dd
+
+	column viagem_id
+		dataType: string
+		lineageTag: c981adbb-057a-42b4-825d-4eb16b9176fd
+		summarizeBy: none
+		sourceColumn: viagem_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column viajante_id
+		dataType: string
+		lineageTag: 1eaf3d60-3fe7-4a95-bff0-3578ae48524e
+		summarizeBy: none
+		sourceColumn: viajante_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column area
+		dataType: string
+		lineageTag: 94a2c018-bcc4-4ede-bcd9-b91c3bc80cdf
+		summarizeBy: none
+		sourceColumn: area
+
+		annotation SummarizationSetBy = Automatic
+
+	column motivo
+		dataType: string
+		lineageTag: 76c406f0-cce6-4a83-9770-821370110b32
+		summarizeBy: none
+		sourceColumn: motivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem
+		dataType: string
+		lineageTag: 24e9492c-c458-4645-b9cd-7bed00b5c263
+		summarizeBy: none
+		sourceColumn: origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column destino
+		dataType: string
+		lineageTag: 16878cd6-2f42-4fa3-994d-c9ddfeecfb2f
+		summarizeBy: none
+		sourceColumn: destino
+
+		annotation SummarizationSetBy = Automatic
+
+	column uf_destino
+		dataType: string
+		lineageTag: 34e074cf-941c-40be-bba5-4d683c5e9bc4
+		summarizeBy: none
+		sourceColumn: uf_destino
+
+		annotation SummarizationSetBy = Automatic
+
+	column regiao_destino
+		dataType: string
+		lineageTag: 0daf4433-565b-4125-987f-414f0798f425
+		summarizeBy: none
+		sourceColumn: regiao_destino
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_solicitacao
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2679e640-109b-40a2-9873-6bf6e3a514d0
+		summarizeBy: none
+		sourceColumn: data_solicitacao
+
+		variation Variation
+			isDefault
+			relationship: 3df767dc-1839-44f4-8cc1-952af97f5b2d
+			defaultHierarchy: LocalDateTable_5337b5ec-2e16-4164-83bf-4b0539bc17ee.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column data_aprovacao
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 33fa6f6b-aa21-4e2a-bc76-3192f4b2cea7
+		summarizeBy: none
+		sourceColumn: data_aprovacao
+
+		variation Variation
+			isDefault
+			relationship: c120c3ad-3b93-4734-898c-c447e488eddf
+			defaultHierarchy: LocalDateTable_1b937cf7-8fce-4ef3-8997-92193aef109c.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column data_ida
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a0f9521e-1d06-43e3-9e95-f1e202ebed82
+		summarizeBy: none
+		sourceColumn: data_ida
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column data_volta
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 67d4b8f5-e67d-4e73-b45e-2fa3eb6b495f
+		summarizeBy: none
+		sourceColumn: data_volta
+
+		variation Variation
+			isDefault
+			relationship: d58d1f1a-8a38-4252-8135-bf71ec464c1e
+			defaultHierarchy: LocalDateTable_2b41b0f3-2304-483c-9e4d-dffb60c76f68.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column antecedencia_dias
+		dataType: int64
+		formatString: 0
+		lineageTag: a9a989b2-792b-4d09-bd0a-fa9b59e30d1f
+		summarizeBy: sum
+		sourceColumn: antecedencia_dias
+
+		annotation SummarizationSetBy = Automatic
+
+	column duracao_dias
+		dataType: int64
+		formatString: 0
+		lineageTag: 854d6070-5d9a-4ace-864c-eb6477f467fd
+		summarizeBy: sum
+		sourceColumn: duracao_dias
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 5e9e7656-e2f0-4fdc-8886-7057fbccad67
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column remarcada
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1b3a52f0-a497-438d-b1e6-355d0e9fe77d
+		summarizeBy: none
+		sourceColumn: remarcada
+
+		annotation SummarizationSetBy = Automatic
+
+	column fora_politica
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: dbf33857-e382-45bb-8e3f-229bc8fdb096
+		summarizeBy: none
+		sourceColumn: fora_politica
+
+		annotation SummarizationSetBy = Automatic
+
+	column tempo_aprovacao_horas
+		dataType: double
+		lineageTag: 710a795c-5719-45ac-bd55-3bee258e0c65
+		summarizeBy: sum
+		sourceColumn: tempo_aprovacao_horas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column saving_pct_referencia
+		dataType: double
+		lineageTag: 742e9b4c-bb67-4780-8bd4-052d19551242
+		summarizeBy: sum
+		sourceColumn: saving_pct_referencia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_aereo_realizado
+		dataType: double
+		lineageTag: 945e00a5-3a7a-4f24-9499-6242df674737
+		summarizeBy: sum
+		sourceColumn: valor_aereo_realizado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_hospedagem_realizado
+		dataType: double
+		lineageTag: dd4364f9-b32e-4786-82ad-5999e6f8e7e7
+		summarizeBy: sum
+		sourceColumn: valor_hospedagem_realizado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_despesas_reembolsaveis
+		dataType: double
+		lineageTag: 4fe229d1-b9a9-46ea-89a9-f48dc01e57b9
+		summarizeBy: sum
+		sourceColumn: valor_despesas_reembolsaveis
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gasto_total_realizado
+		dataType: double
+		lineageTag: d6afe0df-570c-4f2a-835a-1a12349df714
+		summarizeBy: sum
+		sourceColumn: gasto_total_realizado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_referencia
+		dataType: double
+		lineageTag: 1225e451-3356-45f7-8290-2791410d0d6d
+		summarizeBy: sum
+		sourceColumn: valor_referencia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column saving_estimado
+		dataType: double
+		lineageTag: 4b5a6d4f-8e46-40c6-b442-eb7ea814f382
+		summarizeBy: sum
+		sourceColumn: saving_estimado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column data_compra
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4cfc167e-2dbf-4f3e-82d5-62c7c1e2e800
+		summarizeBy: none
+		sourceColumn: data_compra
+
+		variation Variation
+			isDefault
+			relationship: da2d76cf-4e7e-4b3a-9c96-685529556e86
+			defaultHierarchy: LocalDateTable_ea22fcf5-ff4d-4af4-af15-c26763394218.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column centro_custo_id
+		dataType: string
+		lineageTag: ae433488-e077-4590-9b7a-b172784ea64f
+		summarizeBy: none
+		sourceColumn: centro_custo_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition viagens_raw = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(
+				        File.Contents("C:\Users\DELL\Documents\Projetos\Github\Dashboard Viagens Corporativas\viagens_raw.csv"),
+				        [Delimiter=",", Columns=27, Encoding=65001, QuoteStyle=QuoteStyle.None]
+				    ),
+				
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(
+				        Fonte,
+				        [PromoteAllScalars=true]
+				    ),
+				
+				    #"Tipos Básicos Definidos" = Table.TransformColumnTypes(
+				        #"Cabeçalhos Promovidos",
+				        {
+				            {"viagem_id", type text},
+				            {"viajante_id", type text},
+				            {"area", type text},
+				            {"centro_custo_id", type text},
+				            {"motivo", type text},
+				            {"origem", type text},
+				            {"destino", type text},
+				            {"uf_destino", type text},
+				            {"regiao_destino", type text},
+				
+				            {"data_solicitacao", type date},
+				            {"data_aprovacao", type date},
+				            {"data_compra", type date},
+				            {"data_ida", type date},
+				            {"data_volta", type date},
+				
+				            {"antecedencia_dias", Int64.Type},
+				            {"duracao_dias", Int64.Type},
+				
+				            {"status", type text},
+				            {"remarcada", type logical},
+				            {"fora_politica", type logical}
+				        }
+				    ),
+				
+				    #"Decimais Convertidos com Localidade" = Table.TransformColumnTypes(
+				        #"Tipos Básicos Definidos",
+				        {
+				            {"tempo_aprovacao_horas", type number},
+				            {"saving_pct_referencia", type number},
+				            {"valor_aereo_realizado", type number},
+				            {"valor_hospedagem_realizado", type number},
+				            {"valor_despesas_reembolsaveis", type number},
+				            {"gasto_total_realizado", type number},
+				            {"valor_referencia", type number},
+				            {"saving_estimado", type number}
+				        },
+				        "en-US"
+				    ),
+				
+				    #"Erros Data Compra Convertidos em Nulo" = Table.ReplaceErrorValues(
+				        #"Decimais Convertidos com Localidade",
+				        {
+				            {"data_compra", null}
+				        }
+				    ),
+				
+				    #"Data Compra Reconstruída" = Table.AddColumn(
+				        #"Erros Data Compra Convertidos em Nulo",
+				        "data_compra_corrigida",
+				        each
+				            if [data_compra] = null
+				            then Date.AddDays([data_ida], -[antecedencia_dias])
+				            else [data_compra],
+				        type date
+				    ),
+				
+				    #"Data Compra Original Removida" = Table.RemoveColumns(
+				        #"Data Compra Reconstruída",
+				        {"data_compra"}
+				    ),
+				
+				    #"Data Compra Corrigida Renomeada" = Table.RenameColumns(
+				        #"Data Compra Original Removida",
+				        {
+				            {"data_compra_corrigida", "data_compra"}
+				        }
+				    ),
+				
+				    #"Duplicatas Removidas" = Table.Distinct(
+				        #"Data Compra Corrigida Renomeada",
+				        {"viagem_id"}
+				    ),
+				
+				    #"Mesclado com Viajantes" = Table.NestedJoin(
+				        #"Duplicatas Removidas",
+				        {"viajante_id"},
+				        viajantes_raw,
+				        {"viajante_id"},
+				        "CadastroViajante",
+				        JoinKind.LeftOuter
+				    ),
+				
+				    #"Centro de Custo do Cadastro Expandido" = Table.ExpandTableColumn(
+				        #"Mesclado com Viajantes",
+				        "CadastroViajante",
+				        {"centro_custo_id"},
+				        {"centro_custo_id_cadastro"}
+				    ),
+				
+				    #"Centro de Custo Corrigido" = Table.AddColumn(
+				        #"Centro de Custo do Cadastro Expandido",
+				        "centro_custo_id_corrigido",
+				        each
+				            if [centro_custo_id] = null or [centro_custo_id] = ""
+				            then [centro_custo_id_cadastro]
+				            else [centro_custo_id],
+				        type text
+				    ),
+				
+				    #"Centro de Custo Original Removido" = Table.RemoveColumns(
+				        #"Centro de Custo Corrigido",
+				        {
+				            "centro_custo_id",
+				            "centro_custo_id_cadastro"
+				        }
+				    ),
+				
+				    #"Centro de Custo Corrigido Renomeado" = Table.RenameColumns(
+				        #"Centro de Custo Original Removido",
+				        {
+				            {"centro_custo_id_corrigido", "centro_custo_id"}
+				        }
+				    ),
+				
+				    #"Motivo Não Informado Tratado" = Table.TransformColumns(
+				        #"Centro de Custo Corrigido Renomeado",
+				        {
+				            {
+				                "motivo",
+				                each if _ = null or Text.Trim(_) = "" then "Não informado" else _,
+				                type text
+				            }
+				        }
+				    ),
+				
+				    #"Áreas Padronizadas" = Table.TransformColumns(
+				        #"Motivo Não Informado Tratado",
+				        {
+				            {
+				                "area",
+				                each
+				                    let
+				                        Valor = Text.Trim(_)
+				                    in
+				                        if Valor = "Operacoes" or Valor = "OPERAÇÕES" then "Operações"
+				                        else if Valor = "TI" or Valor = "TECNOLOGIA" then "Tecnologia"
+				                        else if Valor = "COMERCIAL" then "Comercial"
+				                        else if Valor = "ADMINISTRATIVO" or Valor = "Adm" then "Administrativo"
+				                        else Valor,
+				                type text
+				            }
+				        }
+				    ),
+				
+				    #"Destinos Padronizados" = Table.TransformColumns(
+				        #"Áreas Padronizadas",
+				        {
+				            {
+				                "destino",
+				                each
+				                    let
+				                        Valor = Text.Trim(_)
+				                    in
+				                        if Valor = "são paulo"
+				                            or Valor = "SP - São Paulo"
+				                            or Valor = "Sao Paulo"
+				                        then "São Paulo"
+				
+				                        else if Valor = "DF - Brasília"
+				                            or Valor = "Brasilia"
+				                        then "Brasília"
+				
+				                        else if Valor = "Vit. da Conquista"
+				                            or Valor = "Vitoria da Conquista"
+				                        then "Vitória da Conquista"
+				
+				                        else if Valor = "FEIRA DE SANTANA"
+				                            or Valor = "Feira Santana"
+				                        then "Feira de Santana"
+				
+				                        else if Valor = "RIO DE JANEIRO"
+				                            or Valor = "Rio"
+				                        then "Rio de Janeiro"
+				
+				                        else Valor,
+				                type text
+				            }
+				        }
+				    ),
+				
+				    #"Valores Monetários Arredondados" = Table.TransformColumns(
+				        #"Destinos Padronizados",
+				        {
+				            {"valor_aereo_realizado", each Number.Round(_, 2), type number},
+				            {"valor_hospedagem_realizado", each Number.Round(_, 2), type number},
+				            {"valor_despesas_reembolsaveis", each Number.Round(_, 2), type number},
+				            {"gasto_total_realizado", each Number.Round(_, 2), type number},
+				            {"valor_referencia", each Number.Round(_, 2), type number},
+				            {"saving_estimado", each Number.Round(_, 2), type number}
+				        }
+				    )
+				
+				in
+				    #"Valores Monetários Arredondados"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

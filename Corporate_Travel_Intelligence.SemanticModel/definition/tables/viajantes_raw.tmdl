@@ -1,0 +1,77 @@
+table viajantes_raw
+	lineageTag: e266cc29-d353-47a5-804a-56d7fad9aa7b
+
+	column viajante_id
+		dataType: string
+		lineageTag: 841dbc7a-7060-4d58-ae44-6ad31556fe9a
+		summarizeBy: none
+		sourceColumn: viajante_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_viajante
+		dataType: string
+		lineageTag: f55b18dc-5aa2-4a0a-97d8-6034c82f6223
+		summarizeBy: none
+		sourceColumn: nome_viajante
+
+		annotation SummarizationSetBy = Automatic
+
+	column area
+		dataType: string
+		lineageTag: 1acf9a29-9d7a-4379-877f-38ebc6ab76be
+		summarizeBy: none
+		sourceColumn: area
+
+		annotation SummarizationSetBy = Automatic
+
+	column centro_custo_id
+		dataType: string
+		lineageTag: 49862f2f-a825-4bde-97ad-601ad6cbb4d0
+		summarizeBy: none
+		sourceColumn: centro_custo_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column senioridade
+		dataType: string
+		lineageTag: 747246fb-69da-4633-b489-471b5eb48f3f
+		summarizeBy: none
+		sourceColumn: senioridade
+
+		annotation SummarizationSetBy = Automatic
+
+	column risco_comportamental
+		dataType: double
+		lineageTag: c771f08d-b524-429c-8e35-5be501a583f4
+		summarizeBy: none
+		sourceColumn: risco_comportamental
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ativo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 12591cc0-af09-46ed-91e5-ce94c35a6b2e
+		summarizeBy: none
+		sourceColumn: ativo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition viajantes_raw = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\DELL\Documents\Projetos\Github\Dashboard Viagens Corporativas\viajantes_raw.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"risco_comportamental", type number}}, "en-US"),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade",{{"ativo", type logical}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,117 @@
+table aereo_raw
+	lineageTag: 1c637bea-b51e-44f4-b8e7-cf4688386710
+
+	column viagem_id
+		dataType: string
+		lineageTag: c2512c48-9f90-416b-b1f0-0e3123fa78f6
+		summarizeBy: none
+		sourceColumn: viagem_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column companhia_aerea
+		dataType: string
+		lineageTag: f3f0bf39-31c5-49d3-b1e1-bba88bf23c5a
+		summarizeBy: none
+		sourceColumn: companhia_aerea
+
+		annotation SummarizationSetBy = Automatic
+
+	column rota
+		dataType: string
+		lineageTag: e39b87dd-d178-417e-acb4-a165865bcc96
+		summarizeBy: none
+		sourceColumn: rota
+
+		annotation SummarizationSetBy = Automatic
+
+	column tarifa_base
+		dataType: double
+		lineageTag: d89104af-b2e0-4849-a7c0-24c681aac57e
+		summarizeBy: sum
+		sourceColumn: tarifa_base
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column taxa_remarcacao
+		dataType: double
+		lineageTag: 27aafef0-65e2-46b5-948f-473d026173d9
+		summarizeBy: sum
+		sourceColumn: taxa_remarcacao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column taxa_cancelamento
+		dataType: double
+		lineageTag: 085ac58d-de60-46d4-8b6c-5aef9b8fc06a
+		summarizeBy: sum
+		sourceColumn: taxa_cancelamento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_aereo_realizado
+		dataType: double
+		lineageTag: 40039696-9462-4c92-8cbc-7e9d8e6df24a
+		summarizeBy: sum
+		sourceColumn: valor_aereo_realizado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column antecedencia_dias
+		dataType: int64
+		formatString: 0
+		lineageTag: 43e46fe7-1ce8-431f-8f2e-301b0ad2ee7a
+		summarizeBy: sum
+		sourceColumn: antecedencia_dias
+
+		annotation SummarizationSetBy = Automatic
+
+	column remarcada
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: cc6db466-3150-4bd0-8e30-9e7448b59bb4
+		summarizeBy: none
+		sourceColumn: remarcada
+
+		annotation SummarizationSetBy = Automatic
+
+	column cancelada
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 135797f6-d17d-4d93-9705-8e89edb31d9a
+		summarizeBy: none
+		sourceColumn: cancelada
+
+		annotation SummarizationSetBy = Automatic
+
+	partition aereo_raw = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\DELL\Documents\Projetos\Github\Dashboard Viagens Corporativas\aereo_raw.csv"),[Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"tarifa_base", type number}, {"taxa_remarcacao", type number}, {"taxa_cancelamento", type number}, {"valor_aereo_realizado", type number}}, "en-US"),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade",{{"antecedencia_dias", Int64.Type}, {"remarcada", type logical}, {"cancelada", type logical}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Tipo Alterado","AZUL","Azul",Replacer.ReplaceText,{"companhia_aerea"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído","Azul Linhas Aéreas","Azul",Replacer.ReplaceText,{"companhia_aerea"}),
+				    #"Valor Substituído2" = Table.ReplaceValue(#"Valor Substituído1","gol","GOL",Replacer.ReplaceText,{"companhia_aerea"}),
+				    #"Valor Substituído3" = Table.ReplaceValue(#"Valor Substituído2","Gol Linhas Aéreas","GOL",Replacer.ReplaceText,{"companhia_aerea"}),
+				    #"Valor Substituído4" = Table.ReplaceValue(#"Valor Substituído3","latam","LATAM",Replacer.ReplaceText,{"companhia_aerea"}),
+				    #"Valor Substituído5" = Table.ReplaceValue(#"Valor Substituído4","LATAM Airlines","LATAM",Replacer.ReplaceText,{"companhia_aerea"}),
+				    #"Valor Substituído6" = Table.ReplaceValue(#"Valor Substituído5","Latam Airlines","LATAM",Replacer.ReplaceText,{"companhia_aerea"}),
+				    #"Valor Substituído7" = Table.ReplaceValue(#"Valor Substituído6","","Não informado",Replacer.ReplaceValue,{"companhia_aerea"})
+				in
+				    #"Valor Substituído7"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,61 @@
+relationship 2cc0e8b8-eca9-4cf8-8cb6-493b14bd5c1c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: despesas_raw.data_despesa
+	toColumn: LocalDateTable_3d513005-4b36-4070-b10c-bb528e51fc92.Date
+
+relationship 3df767dc-1839-44f4-8cc1-952af97f5b2d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: viagens_raw.data_solicitacao
+	toColumn: LocalDateTable_5337b5ec-2e16-4164-83bf-4b0539bc17ee.Date
+
+relationship c120c3ad-3b93-4734-898c-c447e488eddf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: viagens_raw.data_aprovacao
+	toColumn: LocalDateTable_1b937cf7-8fce-4ef3-8997-92193aef109c.Date
+
+relationship d58d1f1a-8a38-4252-8135-bf71ec464c1e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: viagens_raw.data_volta
+	toColumn: LocalDateTable_2b41b0f3-2304-483c-9e4d-dffb60c76f68.Date
+
+relationship da2d76cf-4e7e-4b3a-9c96-685529556e86
+	joinOnDateBehavior: datePartOnly
+	fromColumn: viagens_raw.data_compra
+	toColumn: LocalDateTable_ea22fcf5-ff4d-4af4-af15-c26763394218.Date
+
+relationship 71afb06c-fbd9-3c3e-11e6-d788fd7ba3ee
+	fromColumn: orcamento_raw.centro_custo_id
+	toColumn: centros_custo_raw.centro_custo_id
+
+relationship b7cd5afc-4b62-a687-0ce7-5f35fe25bf23
+	fromColumn: viagens_raw.viajante_id
+	toColumn: viajantes_raw.viajante_id
+
+relationship 8c009ee7-8112-a2c9-544f-73d29162c45e
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: viagens_raw.viagem_id
+	toColumn: aereo_raw.viagem_id
+
+relationship d727a53c-afe9-b3e4-f760-ad3a40af7dd9
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: viagens_raw.viagem_id
+	toColumn: hospedagem_raw.viagem_id
+
+relationship 7da245f3-1601-1c8a-f119-2c6da942e9aa
+	fromColumn: despesas_raw.viagem_id
+	toColumn: viagens_raw.viagem_id
+
+relationship 4d847c2d-610e-90ba-9c70-99b777a5215f
+	fromColumn: viagens_raw.centro_custo_id
+	toColumn: centros_custo_raw.centro_custo_id
+
+relationship c7b5216f-655e-4150-2c47-d9b207326f4f
+	fromColumn: viagens_raw.data_ida
+	toColumn: DimData.Data
+
+relationship e3561afe-2702-a5c1-7963-60e76d6b8664
+	fromColumn: orcamento_raw.mes_referencia
+	toColumn: DimData.Data
+

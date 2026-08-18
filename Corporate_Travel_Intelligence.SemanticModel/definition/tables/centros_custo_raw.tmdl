@@ -1,0 +1,50 @@
+table centros_custo_raw
+	lineageTag: 0bd9628b-0c90-4010-abdf-461d3cd76267
+
+	column centro_custo_id
+		dataType: string
+		lineageTag: 8513410c-c8a4-4922-98c0-569fcf11c492
+		summarizeBy: none
+		sourceColumn: centro_custo_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column area
+		dataType: string
+		lineageTag: 7cf88ded-e8be-4b80-83e2-b58ceda37224
+		summarizeBy: none
+		sourceColumn: area
+
+		annotation SummarizationSetBy = Automatic
+
+	column centro_custo
+		dataType: string
+		lineageTag: 97ce8124-529b-41a2-8acd-8134e38e6ce0
+		summarizeBy: none
+		sourceColumn: centro_custo
+
+		annotation SummarizationSetBy = Automatic
+
+	column diretoria
+		dataType: string
+		lineageTag: 88e77adf-2ae0-40af-abc2-c2a35fdc1118
+		summarizeBy: none
+		sourceColumn: diretoria
+
+		annotation SummarizationSetBy = Automatic
+
+	partition centros_custo_raw = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\DELL\Documents\Projetos\Github\Dashboard Viagens Corporativas\centros_custo_raw.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}}),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"Tipo Alterado", [PromoteAllScalars=true]),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"centro_custo_id", type text}, {"area", type text}, {"centro_custo", type text}, {"diretoria", type text}})
+				in
+				    #"Tipo Alterado1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

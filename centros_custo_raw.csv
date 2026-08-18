@@ -1,0 +1,24 @@
+﻿centro_custo_id,area,centro_custo,diretoria
+CC001,Comercial,COM-01,Diretoria Comercial
+CC002,Comercial,COM-02,Diretoria Comercial
+CC003,Comercial,COM-03,Diretoria Comercial
+CC004,Comercial,COM-04,Diretoria Comercial
+CC005,Operações,OPE-01,Diretoria Operações
+CC006,Operações,OPE-02,Diretoria Operações
+CC007,Operações,OPE-03,Diretoria Operações
+CC008,Operações,OPE-04,Diretoria Operações
+CC009,Tecnologia,TEC-01,Diretoria Tecnologia
+CC010,Tecnologia,TEC-02,Diretoria Tecnologia
+CC011,Tecnologia,TEC-03,Diretoria Tecnologia
+CC012,Administrativo,ADM-01,Diretoria Administrativo
+CC013,Administrativo,ADM-02,Diretoria Administrativo
+CC014,Administrativo,ADM-03,Diretoria Administrativo
+CC015,Financeiro,FIN-01,Diretoria Financeiro
+CC016,Financeiro,FIN-02,Diretoria Financeiro
+CC017,Financeiro,FIN-03,Diretoria Financeiro
+CC018,RH,RH-01,Diretoria RH
+CC019,RH,RH-02,Diretoria RH
+CC020,RH,RH-03,Diretoria RH
+CC021,Diretoria,DIR-01,Diretoria Executiva
+CC022,Diretoria,DIR-02,Diretoria Executiva
+CC023,Diretoria,DIR-03,Diretoria Executiva

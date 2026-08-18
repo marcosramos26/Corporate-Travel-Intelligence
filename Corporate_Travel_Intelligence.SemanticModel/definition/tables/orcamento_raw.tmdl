@@ -1,0 +1,55 @@
+table orcamento_raw
+	lineageTag: cf5ea694-915e-45c9-85ae-3c5eb3a6e4fb
+
+	column mes_referencia
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dac13e32-6972-4cdd-b530-b638eb248e52
+		summarizeBy: none
+		sourceColumn: mes_referencia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column area
+		dataType: string
+		lineageTag: cb78e8a9-cc61-43fc-8dbf-a0f38b4532f2
+		summarizeBy: none
+		sourceColumn: area
+
+		annotation SummarizationSetBy = Automatic
+
+	column centro_custo_id
+		dataType: string
+		lineageTag: 95952a75-dcd0-41b4-a85e-1bf20ffb6de2
+		summarizeBy: none
+		sourceColumn: centro_custo_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column orcado
+		dataType: double
+		lineageTag: 58722b16-8d88-40fa-bbd3-d8dd9861b34b
+		summarizeBy: sum
+		sourceColumn: orcado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition orcamento_raw = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\DELL\Documents\Projetos\Github\Dashboard Viagens Corporativas\orcamento_raw.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"mes_referencia", type date}}),
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Tipo Alterado", {{"orcado", type number}}, "en-US")
+				in
+				    #"Tipo Alterado com Localidade"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

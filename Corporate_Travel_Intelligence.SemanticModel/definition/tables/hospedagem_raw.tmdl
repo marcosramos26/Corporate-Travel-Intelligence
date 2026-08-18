@@ -1,0 +1,91 @@
+table hospedagem_raw
+	lineageTag: 9bc9e227-b798-47cd-8414-afa529c0e92f
+
+	column viagem_id
+		dataType: string
+		lineageTag: d611ce4c-ce94-47e8-89cd-54a8c19b7ee9
+		summarizeBy: none
+		sourceColumn: viagem_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column hotel
+		dataType: string
+		lineageTag: 4c7a752b-c79c-48da-acf4-ccd5a000fc49
+		summarizeBy: none
+		sourceColumn: hotel
+
+		annotation SummarizationSetBy = Automatic
+
+	column cidade
+		dataType: string
+		lineageTag: 4e5953d1-1cf0-4f56-959f-3c5c912a15d9
+		summarizeBy: none
+		sourceColumn: cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column diarias
+		dataType: int64
+		formatString: 0
+		lineageTag: a4a1ae0a-4057-49b9-ac6c-4e1c2b4f0e95
+		summarizeBy: sum
+		sourceColumn: diarias
+
+		annotation SummarizationSetBy = Automatic
+
+	column valor_diaria
+		dataType: double
+		lineageTag: c7e11c93-c92d-4e30-84b7-c45b2899742f
+		summarizeBy: sum
+		sourceColumn: valor_diaria
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_hospedagem_realizado
+		dataType: double
+		lineageTag: a1e08990-fc69-484a-86fe-5418c6e617ab
+		summarizeBy: sum
+		sourceColumn: valor_hospedagem_realizado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fora_politica_hotel
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 911838e1-d640-48d8-beeb-c79db07ad00f
+		summarizeBy: none
+		sourceColumn: fora_politica_hotel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition hospedagem_raw = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\DELL\Documents\Projetos\Github\Dashboard Viagens Corporativas\hospedagem_raw.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"diarias", Int64.Type}}),
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Tipo Alterado", {{"valor_diaria", type number}, {"valor_hospedagem_realizado", type number}}, "en-US"),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade",{{"fora_politica_hotel", type logical}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Tipo Alterado1","FEIRA DE SANTANA","Feira de Santana",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído","SP - São Paulo","São Paulo",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído2" = Table.ReplaceValue(#"Valor Substituído1","são paulo","São Paulo",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído3" = Table.ReplaceValue(#"Valor Substituído2","Vitoria da Conquista","Vitória da Conquista",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído4" = Table.ReplaceValue(#"Valor Substituído3","Vit. da Conquista","Vitória da Conquista",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído5" = Table.ReplaceValue(#"Valor Substituído4","DF - Brasília","Brasília",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído6" = Table.ReplaceValue(#"Valor Substituído5","RIO DE JANEIRO","Rio de Janeiro",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído7" = Table.ReplaceValue(#"Valor Substituído6","Rio","Rio de Janeiro",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído8" = Table.ReplaceValue(#"Valor Substituído7","Rio de Janeiro de Janeiro","Rio de Janeiro",Replacer.ReplaceText,{"cidade"}),
+				    #"Valor Substituído9" = Table.ReplaceValue(#"Valor Substituído8","","Não Informado",Replacer.ReplaceValue,{"hotel"})
+				in
+				    #"Valor Substituído9"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

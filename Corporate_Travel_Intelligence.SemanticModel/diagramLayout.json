@@ -1,0 +1,138 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 108.51865233739495,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 606.98664214033056
+          },
+          "nodeIndex": "aereo_raw",
+          "nodeLineageTag": "1c637bea-b51e-44f4-b8e7-cf4688386710",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1856.0917549136252,
+            "y": 391.79461493241291
+          },
+          "nodeIndex": "centros_custo_raw",
+          "nodeLineageTag": "0bd9628b-0c90-4010-abdf-461d3cd76267",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 938.120094892126,
+            "y": 759.91221142091717
+          },
+          "nodeIndex": "despesas_raw",
+          "nodeLineageTag": "d78030ae-8ac6-4914-acd4-455da922267a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1356.5988129521611,
+            "y": 721.57857138631437
+          },
+          "nodeIndex": "hospedagem_raw",
+          "nodeLineageTag": "9bc9e227-b798-47cd-8414-afa529c0e92f",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1858.0254706669309,
+            "y": 0
+          },
+          "nodeIndex": "orcamento_raw",
+          "nodeLineageTag": "cf5ea694-915e-45c9-85ae-3c5eb3a6e4fb",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 941.43454235558215,
+            "y": 326.65444584381623
+          },
+          "nodeIndex": "viagens_raw",
+          "nodeLineageTag": "9286926f-39f4-415b-b884-530d314fb4dd",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "viajantes_raw",
+          "nodeLineageTag": "e266cc29-d353-47a5-804a-56d7fad9aa7b",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 944.09229551386989,
+            "y": 0
+          },
+          "nodeIndex": "DimData",
+          "nodeLineageTag": "c66ec388-61f4-49ed-b72e-704def1c7351",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1730.5001916731737,
+            "y": 690.73473292510448
+          },
+          "nodeIndex": "_Medidas",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 70.95554390096882,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}
