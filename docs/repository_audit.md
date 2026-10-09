@@ -1,101 +1,63 @@
 # Auditoria do Repositório
 
-Data da auditoria: 18/08/2026.
+Data da atualização: 09/10/2026.
 
-## Estrutura Encontrada
+## Estrutura confirmada
 
 - `Corporate_Travel_Intelligence.pbip`
 - `Corporate_Travel_Intelligence.Report/`
 - `Corporate_Travel_Intelligence.SemanticModel/`
-- `aereo_raw.csv`
-- `assets/dashboard_visao_executiva.png`
-- `centros_custo_raw.csv`
-- `despesas_raw.csv`
-- `hospedagem_raw.csv`
-- `orcamento_raw.csv`
-- `viagens_raw.csv`
-- `viajantes_raw.csv`
-- `scripts/generate_synthetic_data.py`
+- sete arquivos `*_raw.csv`
+- `assets/`
+- `docs/`
+- `scripts/build_page2.js`
 - `.gitignore`
-- `backups/`
 
 ## Git
 
-O repositório local foi inicializado e publicado no GitHub informado:
+Remote configurado:
 
 `https://github.com/marcosramos26/Corporate-Travel-Intelligence.git`
 
-## Fontes de Dados
+O working tree foi consolidado em commit e publicado em `origin/main`.
 
-Sete CSVs brutos foram confirmados na raiz do projeto:
+### Toolkit de agente local
 
-- `viagens_raw.csv`
-- `viajantes_raw.csv`
-- `centros_custo_raw.csv`
-- `aereo_raw.csv`
-- `hospedagem_raw.csv`
-- `despesas_raw.csv`
-- `orcamento_raw.csv`
+O repositório de trabalho contém um toolkit de agente (`AGENTS.md`, `skills/`, `common/`, `evals/` e os scripts `validate_toolkit.py` e `verify_upstream.py`). Esse material é de uso local e está deliberadamente excluído do versionamento pelo `.gitignore`; não faz parte da entrega publicada do projeto.
 
-## Scripts Python
+## Fontes e modelo
 
-Foi adicionado `scripts/generate_synthetic_data.py` para gerar novas bases sintéticas com contrato semelhante aos CSVs publicados.
+- Sete CSVs brutos na raiz.
+- Nove tabelas no modelo: sete fontes, `DimData` e `_Medidas`.
+- 21 medidas DAX.
+- O relatório referencia o modelo por caminho relativo em `definition.pbir`.
+- As consultas M ainda referenciam caminhos locais absolutos para os CSVs.
 
-## Power Query
+## Páginas PBIR
 
-As consultas M estão embutidas nas partitions dos arquivos TMDL em `Corporate_Travel_Intelligence.SemanticModel/definition/tables/`.
+| ID | Nome | Visuais |
+|---|---|---:|
+| `60bf25af6c012497cd0a` | `01 - Visão Executiva` | 13 |
+| `4c8a34d9e12f6b90a7cd` | `02 - Custos & Orçamento` | 15 |
 
-## Tabelas
+Total atual: 2 páginas e 28 visuais.
 
-Tabelas confirmadas:
+## Qualidade e riscos conhecidos
 
-- `aereo_raw`
-- `centros_custo_raw`
-- `despesas_raw`
-- `hospedagem_raw`
-- `orcamento_raw`
-- `viagens_raw`
-- `viajantes_raw`
-- `DimData`
-- `_Medidas`
+- 5.015 linhas brutas de viagens e 5.000 IDs distintos.
+- 15.402 linhas brutas de despesas e 15.372 IDs distintos.
+- 30 viagens distintas não reconciliam saving com referência menos realizado.
+- O orçamento não possui categoria.
+- O gráfico mensal da Página 2 sobrepõe a pergunta respondida pela tendência da Página 1.
+- Os slicers equivalentes ainda não estão sincronizados.
+- Caminhos absolutos reduzem portabilidade.
 
-## Medidas
+## Arquivos que não devem ser publicados
 
-Foram confirmadas 21 medidas DAX na tabela `_Medidas`.
+- `*.pbix` e `*.pbit`
+- diretórios `.pbi/`
+- backups locais
+- caches e arquivos temporários
+- credenciais ou tokens
 
-## Páginas
-
-Páginas confirmadas no PBIR:
-
-- `01 - Visão Executiva`
-
-## Assets
-
-Assets confirmados:
-
-- Screenshot em `assets/dashboard_visao_executiva.png`
-- Ícones em `Corporate_Travel_Intelligence.Report/StaticResources/RegisteredResources/`
-- Tema em `Corporate_Travel_Intelligence.Report/StaticResources/SharedResources/BaseThemes/CY26SU07.json`
-
-## Documentação Existente
-
-Antes desta rodada, não foram encontrados arquivos `.md` de documentação dentro do diretório auditado.
-
-## Inconsistências e Pontos de Atenção
-
-- A pasta local está inicializada como Git e conectada ao repositório GitHub informado.
-- As consultas M usam caminhos absolutos locais para os CSVs.
-- Existem backups de edição visual em `backups/`; são úteis localmente, mas não devem ser publicados no GitHub.
-- Foi encontrado um arquivo `.pbix` fora da pasta auditada. Ele não faz parte da estrutura local documentada para o repositório.
-- Os CSVs brutos preservam problemas de qualidade por desenho do case; a camada tratada fica no Power Query.
-- As tabelas locais automáticas de data foram removidas para privilegiar a `DimData`.
-
-## Arquivos que Não Deveriam Ir para Git
-
-- `backups/`
-- `*.pbix`
-- `*.pbit`
-- `**/.pbi/`
-- caches e arquivos temporários de sistema/editor
-
-Esses padrões foram adicionados ao `.gitignore`.
+Os dados publicados são sintéticos e não foram identificadas credenciais nas definições textuais inspecionadas.

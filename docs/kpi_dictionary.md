@@ -10,7 +10,7 @@ As medidas abaixo foram extraídas da tabela `_Medidas.tmdl`.
 | `Desvio %` | Executivo / Financeiro | Desvio proporcional ao orçamento | `DIVIDE([Desvio R$], [Orçado], 0)` | Percentual | Intensidade relativa do desvio |
 | `Qtd Viagens` | Executivo | Quantidade distinta de viagens | `DISTINCTCOUNT(viagens_raw[viagem_id])` | Número inteiro | Volume de viagens no contexto |
 | `Ticket Médio` | Executivo / Financeiro | Gasto médio por viagem | `DIVIDE([Gasto Total], [Qtd Viagens], 0)` | Moeda BRL | Valor médio realizado por viagem |
-| `Saving Estimado` | Financeiro / Eficiência | Soma do saving estimado | `SUM(viagens_raw[saving_estimado])` | Moeda BRL | Economia estimada em relação à referência |
+| `Saving Estimado` | Financeiro / Eficiência | Soma do saving informado na fonte | `SUM(viagens_raw[saving_estimado])` | Moeda BRL | Estimativa em relação à referência; não é desvio orçamentário |
 | `Taxa Fora da Política` | Compliance | Percentual de viagens fora da política | `DIVIDE(CALCULATE([Qtd Viagens], viagens_raw[fora_politica] = TRUE()), [Qtd Viagens], 0)` | Percentual | Quanto maior, maior risco de conformidade |
 | `Antecedência Média` | Eficiência | Média de dias de antecedência | `AVERAGE(viagens_raw[antecedencia_dias])` | Número decimal | Antecedência média de compra |
 | `% Compras < 7 dias` | Eficiência / Compliance | Percentual de viagens compradas com menos de 7 dias | `DIVIDE(CALCULATE([Qtd Viagens], viagens_raw[antecedencia_dias] < 7), [Qtd Viagens], 0)` | Percentual | Sinaliza compras potencialmente menos eficientes |
@@ -29,5 +29,8 @@ As medidas abaixo foram extraídas da tabela `_Medidas.tmdl`.
 ## Observações
 
 - As fórmulas foram preservadas integralmente.
-- A interpretação do desvio segue a regra confirmada no modelo: realizado menos orçado.
+- A interpretação do desvio segue a regra confirmada no modelo: realizado menos orçado. Valor positivo é estouro/vermelho; valor negativo é economia/verde.
+- “Desvio favorável” descreve o resultado gerencial, não o sinal matemático. Exemplo: `(R$ 43 mil)` em verde significa R$ 43 mil abaixo do orçamento.
+- Saving usa `valor_referencia` como base, enquanto desvio usa o orçamento aprovado. As métricas não são equivalentes.
+- Em 30 das 5.000 viagens distintas do CSV atual, `saving_estimado` não reconcilia com `valor_referencia - gasto_total_realizado`; a diferença acumulada é R$ 65.338,70. O KPI permanece experimental até revisão da fonte ou formalização de outra regra.
 - A medida `Diária Média Hotel` usa formatação de moeda diferente de algumas medidas BRL no TMDL, com hint `es-US`; isso pode ser revisado futuramente se houver necessidade visual.

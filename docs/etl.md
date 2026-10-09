@@ -26,6 +26,7 @@ Problemas confirmados:
 - Variações de área como `Adm`, `COMERCIAL`, `Operacoes`, `OPERAÇÕES`, `TI` e `TECNOLOGIA`.
 - Erros em `data_compra` tratados no Power Query.
 - Valores monetários sujeitos a artefatos de ponto flutuante.
+- Em 30 das 5.000 viagens distintas, `saving_estimado` não reconcilia com `valor_referencia - gasto_total_realizado`; a diferença acumulada é R$ 65.338,70.
 
 Regras aplicadas:
 
@@ -40,6 +41,8 @@ Regras aplicadas:
 - Preenche `motivo` vazio como `Não informado`.
 - Padroniza áreas e destinos por igualdade exata.
 - Arredonda campos monetários para 2 casas decimais.
+
+O processo atual preserva `saving_estimado` conforme recebido. A inconsistência está documentada e deve ser resolvida na origem ou por uma regra de negócio formal antes de usar Saving como KPI auditado.
 
 ## despesas_raw
 

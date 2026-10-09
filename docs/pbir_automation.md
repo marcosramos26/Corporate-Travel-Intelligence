@@ -2,69 +2,73 @@
 
 ## Por que PBIP/PBIR
 
-PBIP/PBIR transforma o relatório Power BI em uma estrutura de arquivos legíveis por ferramentas de versionamento. Isso permite auditar páginas, visuais, posições, propriedades de formatação e vínculo com o modelo semântico.
+PBIP/PBIR transforma o relatório em arquivos versionáveis. Páginas, visuais, posições, bindings e propriedades de formatação podem ser revisados por diff, validados automaticamente e carregados novamente no Power BI Desktop.
 
-## Estrutura Confirmada
+## Estrutura atual
 
-- `Corporate_Travel_Intelligence.Report/definition/pages/pages.json`: ordem e página ativa.
-- `Corporate_Travel_Intelligence.Report/definition/pages/60bf25af6c012497cd0a/page.json`: página `01 - Visão Executiva`.
-- `Corporate_Travel_Intelligence.Report/definition/pages/60bf25af6c012497cd0a/visuals/*/visual.json`: configuração de cada visual.
-- `Corporate_Travel_Intelligence.Report/definition.pbir`: referência ao modelo semântico por caminho relativo.
+```text
+Corporate_Travel_Intelligence.pbip
+├── Corporate_Travel_Intelligence.Report/
+│   └── definition/
+│       ├── report.json
+│       └── pages/
+│           ├── pages.json
+│           ├── 60bf25af6c012497cd0a/   # 01 - Visão Executiva
+│           └── 4c8a34d9e12f6b90a7cd/   # 02 - Custos & Orçamento
+└── Corporate_Travel_Intelligence.SemanticModel/
+    └── definition/
+```
 
-## Página Executiva
+## Inventário do relatório
 
-Visuais confirmados na página:
+| Página | Visuais | Principais tipos |
+|---|---:|---|
+| `01 - Visão Executiva` | 13 | 5 cards, 2 slicers, linha, barras, Deneb e 3 shapes |
+| `02 - Custos & Orçamento` | 15 | 5 cards, 2 slicers, combo, 3 barras, matriz e 3 shapes |
 
-| Pasta do visual | Tipo | Componente |
-|---|---|---|
-| `8faf69e5a3f40eda8ebb` | `cardVisual` | KPI Gasto Total |
-| `4f0ae0ab608e226cee9f` | `cardVisual` | KPI Orçado |
-| `1650cd17e0b0b103231d` | `cardVisual` | KPI Desvio % |
-| `3abea10989ea2360636d` | `cardVisual` | KPI Qtd Viagens |
-| `ffe326c0e7545c83e73b` | `cardVisual` | KPI Ticket Médio |
-| `ef84ccc731e2caa3748b` | `lineChart` | Tendência mensal |
-| `994b8a19d8658f7281a2` | `clusteredBarChart` | Gasto por área |
-| `846cb390114782d48905` | `lineClusteredColumnComboChart` | Desvio por área |
-| `29b28eaa0faaa7f9133a` | `slicer` | Filtro de Área |
-| `d510f55e99586fe8325d` | `slicer` | Filtro de Período |
-| `dca8c92c3e127ea5f2ba` | `shape` | Fundo do header |
-| `f2664c4c49bff477becf` | `shape` | Título/subtítulo do header |
-| `61306605f3ed82c8e18e`, `09492050012310606e0b`, `78bb94c6ab42a69d1ac2`, `7a39881df5606a5317c5`, `ae6e6bc5a6ace441df10` | `image` | Ícones dos KPIs |
+O relatório registra o custom visual certificado Deneb. Seu uso está limitado ao gráfico de desvio por área da Página 1.
 
-Após a limpeza de portfólio, a página vazia `Página 1` foi removida do PBIR.
+## Página 2 reproduzível
 
-## Propriedades Manipuladas
+`scripts/build_page2.js` cria de forma determinística:
 
-Na rodada visual do projeto, foram usadas propriedades nativas de PBIR relacionadas a:
+- metadados da página;
+- header e slicers baseados na identidade da Página 1;
+- cinco cards de KPI;
+- quatro gráficos financeiros;
+- matriz de detalhamento;
+- inclusão da página em `pages.json`.
 
-- posição e dimensão dos containers;
-- cor de fundo da página;
-- fundos e bordas de cards;
-- título, subtítulo e rótulos;
-- cores de séries;
-- sombras leves;
-- filtros integrados ao header;
-- espaçamento e alinhamento.
+O script reutiliza estruturas da Página 1 para preservar schemas, identidade visual e bindings compatíveis.
 
-## Controles para Evitar Quebra de Lógica
+## Fluxo de autoria e validação
 
-- Bindings de campos e medidas preservados.
-- Medidas DAX não alteradas.
-- Modelo semântico não alterado.
-- CSVs não alterados.
-- Validação por parse de JSON após edição.
-- Backup criado antes das alterações visuais.
+1. Inspecionar páginas, visuais, TMDL e medidas existentes.
+2. Consultar capabilities e propriedades suportadas pelo CLI.
+3. Alterar apenas a pasta `.Report` quando o trabalho for visual.
+4. Executar validação estrutural.
+5. Recarregar o PBIP no Power BI Desktop.
+6. Capturar screenshot da página alterada.
+7. Revisar clipping, dados, cores, hierarquia e espaçamento.
 
-## Ganhos
+```powershell
+powerbi-report-author preview-pages Corporate_Travel_Intelligence.Report --with-derived
+powerbi-report-author preview-visuals Corporate_Travel_Intelligence.Report --with-derived
+powerbi-report-author validate Corporate_Travel_Intelligence.Report --pretty
+```
 
-- Camada visual tratada como código.
-- Menos trabalho manual repetitivo no Power BI.
-- Melhor rastreabilidade de alterações.
-- Documentação clara para explicar o uso de IA com critério.
+## Guardrails
 
-## Riscos e Limitações
+- Não inventar medidas, campos ou números.
+- Separar alterações do Report e do SemanticModel.
+- Preservar IDs e bindings existentes quando possível.
+- Validar após cada lote lógico.
+- Não publicar sem validação estrutural e visual.
+- Manter alterações reversíveis pelo Git.
 
-- O schema PBIR ainda pode variar entre versões do Power BI.
-- Algumas propriedades visuais aceitas em JSON podem renderizar de forma diferente no Desktop.
-- Ajustes visuais precisam ser validados no Power BI Desktop com screenshot real.
-- A automação não substitui validação de negócio, apenas acelera ajustes estruturais e documentação.
+## Limitações
+
+- O schema PBIR varia entre versões do Desktop.
+- Propriedades válidas podem renderizar de maneira diferente entre versões.
+- A validação JSON não substitui a inspeção no Power BI Desktop.
+- Scripts de autoria dependem da estrutura atual da Página 1 e devem ser revisados após mudanças profundas.

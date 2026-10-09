@@ -49,8 +49,11 @@ O Auto Date/Time foi desativado no TMDL, removendo as tabelas locais automática
 - Uso de `DimData` para alinhar realizado e orçamento no mesmo eixo temporal.
 - Auto Date/Time desativado para reduzir ruído e privilegiar calendário controlado.
 - Modelo mantido simples para clareza semântica e uso como case de portfólio.
+- O orçamento permanece no grão mês × centro de custo e não suporta decomposição por categoria.
+- Saving é uma métrica de referência armazenada na fonte e não deve ser confundida com o desvio orçamentário.
 
 ## Pontos de Atenção
 
 - As consultas usam caminhos absolutos para os CSVs, o que pode exigir ajuste ao clonar o repositório.
 - Ao abrir o projeto no Power BI Desktop, valide se as configurações do arquivo mantiveram o Auto Date/Time desligado.
+- Trinta viagens distintas não reconciliam `saving_estimado` com referência menos realizado; revisar antes de tratar Saving como KPI auditado.

@@ -37,7 +37,14 @@ flowchart TD
 - `Corporate_Travel_Intelligence.SemanticModel/definition.pbism`: definição do modelo semântico.
 - `Corporate_Travel_Intelligence.SemanticModel/definition/tables/*.tmdl`: tabelas, colunas, medidas e consultas M.
 - `Corporate_Travel_Intelligence.Report/definition/pages/*`: páginas e visuais em PBIR.
-- `scripts/generate_synthetic_data.py`: gerador Python determinístico para novas bases sintéticas.
+- `scripts/build_page2.js`: gerador determinístico da página `02 - Custos & Orçamento`.
+
+## Relatório atual
+
+- Página `01 - Visão Executiva`: 13 visuais.
+- Página `02 - Custos & Orçamento`: 15 visuais.
+- Canvas das duas páginas: `1440 × 900`.
+- Deneb/Vega-Lite é usado somente no gráfico divergente da Página 1; os demais visuais analíticos são nativos.
 
 ## Reprodutibilidade
 

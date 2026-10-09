@@ -5,8 +5,8 @@
     "x": 24,
     "y": 136,
     "z": 2000,
-    "height": 144,
-    "width": 272,
+    "height": 128,
+    "width": 266,
     "tabOrder": 2000
   },
   "visual": {
@@ -103,7 +103,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "24D"
+                  "Value": "26D"
                 }
               }
             },
@@ -112,7 +112,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F77E5'"
+                      "Value": "'#2F80ED'"
                     }
                   }
                 }
@@ -146,7 +146,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#6B778C'"
+                      "Value": "'#667085'"
                     }
                   }
                 }
@@ -232,6 +232,48 @@
       "layout": [
         {
           "properties": {
+            "backgroundShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "paddingUniform": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "topOuterMargin": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "bottomOuterMargin": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "leftOuterMargin": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "rightOuterMargin": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
             "rectangleRoundedCurve": {
               "expr": {
                 "Literal": {
@@ -327,7 +369,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#BFD8FA'"
+                      "Value": "'#DCE5F0'"
                     }
                   }
                 }
@@ -356,7 +398,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },

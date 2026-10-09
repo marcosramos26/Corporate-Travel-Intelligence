@@ -3,9 +3,9 @@
   "name": "994b8a19d8658f7281a2",
   "position": {
     "x": 24,
-    "y": 616,
+    "y": 600,
     "z": 8000,
-    "height": 260,
+    "height": 276,
     "width": 688,
     "tabOrder": 8000
   },
@@ -114,12 +114,12 @@
       "dataPoint": [
         {
           "properties": {
-            "fill": {
+            "defaultColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F77E5'"
+                      "Value": "'#2F80ED'"
                     }
                   }
                 }
@@ -138,17 +138,49 @@
                 }
               }
             },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'OutsideEnd'"
+                }
+              }
+            },
             "optimizeLabelDisplay": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
             "labelOverflow": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#475467'"
+                    }
+                  }
                 }
               }
             }
@@ -208,7 +240,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Realizado acumulado por área'"
+                  "Value": "'Ranking do gasto realizado por área'"
                 }
               }
             },
@@ -320,7 +352,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E3E8EF'"
+                      "Value": "'#DCE5F0'"
                     }
                   }
                 }
@@ -349,7 +381,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -374,21 +406,21 @@
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "95D"
+                  "Value": "97D"
                 }
               }
             },
             "shadowBlur": {
               "expr": {
                 "Literal": {
-                  "Value": "6D"
+                  "Value": "4D"
                 }
               }
             },
             "shadowDistance": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "1D"
                 }
               }
             }

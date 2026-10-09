@@ -1,19 +1,19 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "846cb390114782d48905",
   "position": {
     "x": 728,
-    "y": 616,
+    "y": 600,
     "z": 9000,
-    "height": 260,
+    "height": 276,
     "width": 688,
     "tabOrder": 9000
   },
   "visual": {
-    "visualType": "lineClusteredColumnComboChart",
+    "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
     "query": {
       "queryState": {
-        "Category": {
+        "dataset": {
           "projections": [
             {
               "field": {
@@ -28,12 +28,41 @@
               },
               "queryRef": "centros_custo_raw.area",
               "nativeQueryRef": "area",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
+              "active": true,
+              "displayName": "Area"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Gasto Total"
+                }
+              },
+              "queryRef": "_Medidas.Gasto Total",
+              "nativeQueryRef": "Gasto Total",
+              "active": false,
+              "displayName": "Realizado"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Orçado"
+                }
+              },
+              "queryRef": "_Medidas.Orçado",
+              "nativeQueryRef": "Orçado",
+              "active": false,
+              "displayName": "Orcado"
+            },
             {
               "field": {
                 "Measure": {
@@ -46,7 +75,25 @@
                 }
               },
               "queryRef": "_Medidas.Desvio R$",
-              "nativeQueryRef": "Desvio R$"
+              "nativeQueryRef": "Desvio R$",
+              "active": false,
+              "displayName": "Desvio"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Desvio %"
+                }
+              },
+              "queryRef": "_Medidas.Desvio %",
+              "nativeQueryRef": "Desvio %",
+              "active": false,
+              "displayName": "DesvioPct"
             }
           ]
         }
@@ -71,253 +118,124 @@
       }
     },
     "objects": {
-      "categoryAxis": [
+      "vega": [
         {
           "properties": {
-            "showAxisTitle": {
+            "jsonSpec": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'{\"$schema\":\"https://vega.github.io/schema/vega-lite/v5.json\",\"data\":{\"name\":\"dataset\"},\"width\":\"container\",\"height\":\"container\",\"autosize\":{\"type\":\"fit\",\"contains\":\"padding\"},\"padding\":{\"left\":0,\"right\":12,\"top\":4,\"bottom\":0},\"title\":{\"text\":\"Desvio por área\",\"subtitle\":[\"Vermelho: acima | Verde: abaixo do orçamento\"],\"anchor\":\"start\",\"font\":\"Segoe UI Semibold\",\"fontSize\":15,\"fontWeight\":600,\"color\":\"#172B4D\",\"subtitleFont\":\"Segoe UI\",\"subtitleFontSize\":10,\"subtitleColor\":\"#6B778C\",\"offset\":18},\"transform\":[{\"filter\":\"isValid(datum.Desvio)\"},{\"calculate\":\"abs(datum.Desvio)\",\"as\":\"AbsDesvio\"},{\"joinaggregate\":[{\"op\":\"max\",\"field\":\"AbsDesvio\",\"as\":\"MaxAbs\"}]},{\"calculate\":\"datum.MaxAbs === 0 ? 0 : datum.Desvio / datum.MaxAbs\",\"as\":\"DesvioNorm\"},{\"calculate\":\"(datum.Desvio < 0 ? \\\"−R$ \\\" : \\\"R$ \\\") + replace(format(abs(datum.Desvio) >= 1000000 ? abs(datum.Desvio)/1000000 : abs(datum.Desvio)/1000, abs(datum.Desvio) >= 1000000 ? \\\".2f\\\" : \\\".1f\\\"), \\\".\\\", \\\",\\\") + (abs(datum.Desvio) >= 1000000 ? \\\" Mi\\\" : \\\" Mil\\\")\",\"as\":\"Rotulo\"}],\"encoding\":{\"y\":{\"field\":\"Area\",\"type\":\"nominal\",\"sort\":{\"op\":\"sum\",\"field\":\"Desvio\",\"order\":\"descending\"},\"axis\":{\"labelPadding\":10,\"labelLimit\":110}}},\"layer\":[{\"mark\":{\"type\":\"rule\",\"color\":\"#CBD5E1\",\"strokeWidth\":1},\"encoding\":{\"x\":{\"datum\":0,\"scale\":{\"domain\":[-1.15,1.15]}}}},{\"mark\":{\"type\":\"bar\",\"cornerRadiusEnd\":4,\"height\":{\"band\":0.56}},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"color\":{\"condition\":[{\"test\":\"datum.Desvio > 0\",\"value\":\"#D64545\"},{\"test\":\"datum.Desvio < 0\",\"value\":\"#0F9D76\"}],\"value\":\"#94A3B8\"},\"tooltip\":[{\"field\":\"Area\",\"type\":\"nominal\",\"title\":\"Área\"},{\"field\":\"Realizado\",\"type\":\"quantitative\",\"title\":\"Realizado\",\"format\":\",.2f\"},{\"field\":\"Orcado\",\"type\":\"quantitative\",\"title\":\"Orçado\",\"format\":\",.2f\"},{\"field\":\"Desvio\",\"type\":\"quantitative\",\"title\":\"Desvio\",\"format\":\",.2f\"},{\"field\":\"DesvioPct\",\"type\":\"quantitative\",\"title\":\"Desvio %\",\"format\":\".2%\"}]}},{\"transform\":[{\"filter\":\"datum.DesvioNorm >= 0.25\"}],\"mark\":{\"type\":\"text\",\"align\":\"right\",\"baseline\":\"middle\",\"dx\":-7,\"font\":\"Segoe UI\",\"fontSize\":10,\"fontWeight\":600,\"color\":\"#FFFFFF\"},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"text\":{\"field\":\"Rotulo\"}}},{\"transform\":[{\"filter\":\"datum.DesvioNorm >= 0 && datum.DesvioNorm < 0.25\"}],\"mark\":{\"type\":\"text\",\"align\":\"left\",\"baseline\":\"middle\",\"dx\":7,\"font\":\"Segoe UI\",\"fontSize\":10,\"color\":\"#475467\"},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"text\":{\"field\":\"Rotulo\"}}},{\"transform\":[{\"filter\":\"datum.DesvioNorm <= -0.25\"}],\"mark\":{\"type\":\"text\",\"align\":\"left\",\"baseline\":\"middle\",\"dx\":7,\"font\":\"Segoe UI\",\"fontSize\":10,\"fontWeight\":600,\"color\":\"#FFFFFF\"},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"text\":{\"field\":\"Rotulo\"}}},{\"transform\":[{\"filter\":\"datum.DesvioNorm < 0 && datum.DesvioNorm > -0.25\"}],\"mark\":{\"type\":\"text\",\"align\":\"right\",\"baseline\":\"middle\",\"dx\":-7,\"font\":\"Segoe UI\",\"fontSize\":10,\"color\":\"#475467\"},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"text\":{\"field\":\"Rotulo\"}}}],\"config\":{\"background\":null,\"view\":{\"stroke\":null},\"axis\":{\"domain\":false,\"ticks\":false,\"grid\":false,\"labelFont\":\"Segoe UI\",\"labelFontSize\":11,\"labelColor\":\"#667085\",\"title\":null}}}'"
                 }
               }
             },
-            "show": {
+            "jsonConfig": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+                  "Value": "'{}'"
                 }
               }
             },
-            "gridlineStyle": {
+            "provider": {
               "expr": {
                 "Literal": {
-                  "Value": "'solid'"
+                  "Value": "'vegaLite'"
                 }
               }
             },
-            "gridlineShow": {
+            "renderMode": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'svg'"
                 }
               }
             },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "labels": [
-        {
-          "properties": {
-            "show": {
+            "enableTooltips": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
             },
-            "labelDisplayUnits": {
+            "enableSelection": {
               "expr": {
                 "Literal": {
-                  "Value": "1000D"
+                  "Value": "true"
                 }
               }
             },
-            "labelPrecision": {
+            "selectionMode": {
               "expr": {
                 "Literal": {
-                  "Value": "1L"
+                  "Value": "'simple'"
+                }
+              }
+            },
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6.4.3'"
                 }
               }
             }
           }
         }
       ],
-      "dataPoint": [
+      "stateManagement": [
         {
           "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Conditional": {
-                      "Cases": [
-                        {
-                          "Condition": {
-                            "Comparison": {
-                              "ComparisonKind": 2,
-                              "Left": {
-                                "Measure": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Entity": "_Medidas"
-                                    }
-                                  },
-                                  "Property": "Desvio R$"
-                                }
-                              },
-                              "Right": {
-                                "Literal": {
-                                  "Value": "0D"
-                                }
-                              }
-                            }
-                          },
-                          "Value": {
-                            "Literal": {
-                              "Value": "'#C62828'"
-                            }
-                          }
-                        },
-                        {
-                          "Condition": {
-                            "Comparison": {
-                              "ComparisonKind": 3,
-                              "Left": {
-                                "Measure": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Entity": "_Medidas"
-                                    }
-                                  },
-                                  "Property": "Desvio R$"
-                                }
-                              },
-                              "Right": {
-                                "Literal": {
-                                  "Value": "0D"
-                                }
-                              }
-                            }
-                          },
-                          "Value": {
-                            "Literal": {
-                              "Value": "'#2E7D32'"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
+            "viewportHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "250D"
+                }
+              }
+            },
+            "viewportWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "654D"
+                }
+              }
+            },
+            "supportFieldConfiguration": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"Area\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"Realizado\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"Orcado\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"Desvio\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"DesvioPct\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false}}'"
+                }
+              }
+            },
+            "denebMetaVersion": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2'"
+                }
+              }
+            },
+            "consolidateFieldParameters": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
-          },
-          "selector": {
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 1
+          }
+        }
+      ],
+      "developer": [
+        {
+          "properties": {
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2.0.0.0'"
                 }
               }
-            ]
+            }
           }
         }
       ]
     },
     "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Desvio por área'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "15D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#172B4D'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "subTitle": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Diferença entre realizado e orçamento'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#6B778C'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
       "padding": [
         {
           "properties": {
@@ -398,7 +316,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E3E8EF'"
+                      "Value": "'#DCE5F0'"
                     }
                   }
                 }
@@ -427,46 +345,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Outer'"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#172B4D'"
-                    }
-                  }
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "95D"
-                }
-              }
-            },
-            "shadowBlur": {
-              "expr": {
-                "Literal": {
-                  "Value": "6D"
-                }
-              }
-            },
-            "shadowDistance": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
+                  "Value": "false"
                 }
               }
             }

@@ -22,3 +22,18 @@ __pycache__/
 
 # Default output from the synthetic data generator
 data/generated/
+
+# Local agent toolkit (not published)
+/AGENTS.md
+/skills/
+/common/
+/evals/
+/scripts/validate_toolkit.py
+/scripts/verify_upstream.py
+/scripts/upstream/
+
+# Node / Python runtime
+node_modules/
+.venv/
+venv/
+*.env

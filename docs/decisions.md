@@ -90,15 +90,15 @@ Motivo: facilita reuso, auditoria e manutenção.
 
 Trade-offs: exige disciplina para não duplicar cálculos em visuais.
 
-## ADR-010 — Visuais Nativos
+## ADR-010 — Visuais Nativos com Exceção Controlada
 
 Contexto: o projeto deve ser fácil de abrir e manter no Power BI.
 
-Decisão: usar visuais nativos do Power BI.
+Decisão: usar visuais nativos do Power BI como padrão e Deneb somente no desvio divergente da Página 1.
 
-Motivo: reduz dependências e riscos de compatibilidade.
+Motivo: reduz dependências e riscos de compatibilidade, preservando flexibilidade onde o visual nativo não entregou o acabamento necessário.
 
-Trade-offs: limita algumas possibilidades visuais avançadas.
+Trade-offs: a Página 1 passa a depender do pacote certificado do Deneb para um único visual.
 
 ## ADR-011 — PBIP/PBIR para Versionamento Visual
 
@@ -129,3 +129,33 @@ Decisão: remover tabelas locais automáticas de data e desligar a anotação `_
 Motivo: reduzir ruído no modelo e reforçar a modelagem temporal explícita.
 
 Trade-offs: qualquer análise futura usando datas secundárias deve criar relacionamento ou medida adequada de forma intencional.
+
+## ADR-014 — Sem Waterfall por Categoria
+
+Contexto: a Página 2 previa decompor Orçado até Realizado por categorias de gasto.
+
+Decisão: não construir o waterfall e usar Orçado x Realizado por Centro de Custo.
+
+Motivo: o orçamento existe por mês e centro de custo, mas não por categoria. Uma decomposição categórica exigiria uma alocação inexistente e matematicamente arbitrária.
+
+Trade-offs: a página perde uma narrativa waterfall, mas mantém comparabilidade financeira correta.
+
+## ADR-015 — Separação entre Desvio e Saving
+
+Contexto: ambos podem ser percebidos como economia, apesar de utilizarem referências diferentes.
+
+Decisão: documentar Desvio como Realizado menos Orçado e Saving como estimativa contra valor de referência.
+
+Motivo: evitar soma, comparação direta ou interpretação equivalente entre indicadores.
+
+Trade-offs: Saving permanece experimental enquanto 30 viagens não reconciliadas não forem explicadas.
+
+## ADR-016 — Sobreposição dos Gráficos Mensais
+
+Contexto: as páginas 1 e 2 atualmente comparam as mesmas medidas no mesmo grão mensal.
+
+Decisão: registrar a sobreposição e planejar a substituição do gráfico mensal da Página 2 por barras de Desvio mensal.
+
+Motivo: cada página deve responder uma pergunta analítica distinta.
+
+Trade-offs: o PBIR atual ainda mantém os dois visuais até que o refinamento seja implementado e validado.

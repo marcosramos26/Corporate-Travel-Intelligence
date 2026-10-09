@@ -1,58 +1,87 @@
 # Design System do Dashboard
 
-## Objetivo Visual
+## Direção visual
 
-A página `01 - Visão Executiva` foi tratada como interface analítica executiva: leitura rápida, hierarquia clara, baixo ruído visual e aparência corporativa moderna.
+O relatório foi desenhado como uma interface executiva corporativa: hierarquia clara, leitura rápida, baixo ruído e consistência entre páginas. O design evita ícones decorativos, gradientes, sombras pesadas, gráficos 3D e cores sem significado analítico.
 
-## Paleta
+## Tokens principais
 
-| Uso | Cor |
+| Uso | Valor |
 |---|---|
-| Azul principal / realizado / accent | `#1F77E5` |
-| Azul-marinho estrutural / orçamento / header | `#172B4D` |
+| Canvas | `1440 × 900` |
+| Fundo geral | `#F4F7FB` |
+| Header | `#0B1F3A` |
+| Realizado / destaque | `#2F80ED` |
+| Texto principal | `#172B4D` |
 | Texto secundário | `#6B778C` |
-| Fundo geral | `#EFF3F8` |
-| Superfícies | `#FFFFFF` |
-| Favorável / economia | `#2E7D32` |
-| Desfavorável / estouro | `#C62828` |
+| Superfície | `#FFFFFF` |
+| Borda | `#DCE5F0` |
+| Favorável | `#159B76` |
+| Desfavorável | `#D94B4B` |
+| Raio padrão | 12 px |
+| Margem externa | 24 px |
 
-## Hierarquia
+## Hierarquia das páginas
 
-1. Header executivo com título, subtítulo e filtros.
-2. Faixa de KPIs de leitura imediata.
-3. Tendência mensal em largura total.
-4. Análises por área em dois painéis equivalentes.
+1. Header com título, subtítulo e filtros.
+2. Linha de cinco KPIs uniformes.
+3. Área principal de análise.
+4. Análises complementares ou detalhamento.
+
+O espaçamento segue aproximadamente múltiplos de 8 px, com gaps de 16 px e margens externas de 24 px.
 
 ## Cards de KPI
 
-- Superfície branca.
-- Valor com maior peso visual que o rótulo.
-- Uso de azul para realizado, marinho para orçamento e verde/vermelho somente quando há semântica de desvio.
-- Bordas e sombras discretas.
-- Espaçamento baseado em múltiplos de 8 px.
+- Cinco cards por página, com dimensões equivalentes.
+- Rótulo pequeno acima do valor.
+- Azul para Gasto Total; azul-marinho para valores neutros.
+- Verde e vermelho somente para desempenho.
+- Sem ícones, sparklines ou elementos decorativos.
+- Fundo branco, borda discreta e sem sombra perceptível.
+
+## Semântica de cor
+
+- Realizado: azul.
+- Orçamento: azul-marinho ou cinza-azulado.
+- `Desvio > 0`: vermelho, pois representa gasto acima do orçamento.
+- `Desvio < 0`: verde, pois representa gasto abaixo do orçamento.
+- Zero: neutro.
+
+A cor deve ser acompanhada de sinal ou texto explicativo. Um valor verde entre parênteses representa resultado numericamente negativo e gerencialmente favorável.
 
 ## Gráficos
 
-- Linha de realizado em `#1F77E5`.
-- Linha de orçado em `#172B4D`.
-- Desvio positivo em vermelho e negativo em verde.
-- Gridlines reduzidas para diminuir ruído.
-- Títulos curtos e subtítulos contextuais.
-- Containers brancos com cantos arredondados sutis.
+- Títulos com Segoe UI Semibold e subtítulos em Segoe UI regular.
+- Gridlines extremamente sutis.
+- Legendas compactas.
+- Rótulos apenas quando agregam leitura.
+- Eixos quantitativos podem ser ocultados quando os rótulos já comunicam o valor.
+- Deneb é restrito ao desvio divergente da Página 1.
 
 ## Filtros
 
-- Área e Período integrados ao header.
-- Superfície branca para contraste sobre o header escuro.
-- Alinhamento compacto com a faixa superior.
+- Área e Período aparecem no canto superior direito do header.
+- Superfície clara sobre fundo escuro.
+- Os mesmos campos são usados nas duas páginas.
+- Os slicers ainda não estão sincronizados entre páginas.
 
-## Acessibilidade e Legibilidade
+## Páginas
 
-- Contraste alto entre texto principal e fundo.
-- Uso de cor restrito a significado analítico.
-- Evita dependência exclusiva de decoração.
-- Mantém área de leitura livre para screenshot de portfólio.
+### 01 - Visão Executiva
 
-## Limitações
+- Tendência mensal ocupa a principal área de atenção.
+- Ranking de gasto e desvio por área completam a leitura.
 
-O PBIR expõe muitas propriedades de formatação em JSON, mas nem toda opção visual do Power BI tem comportamento estável entre versões. Por isso, o redesign priorizou propriedades nativas e reversíveis: posição, tamanho, fundo, borda, sombra, títulos, cores e estilo dos visuais.
+### 02 - Custos & Orçamento
+
+- Mantém o mesmo header, grid, cards, bordas e tipografia.
+- Organiza análise mensal, composição, desvios, centro de custo e matriz.
+- O gráfico mensal ainda apresenta sobreposição analítica com a Página 1 e está previsto para refinamento.
+
+## Acessibilidade
+
+- Alto contraste entre textos e superfícies.
+- Cor não deve ser a única indicação de significado.
+- Valores não podem ficar truncados.
+- Tooltips devem trazer contexto de orçamento, realizado e desvio.
+- O layout deve permanecer legível em `Fit to page`.

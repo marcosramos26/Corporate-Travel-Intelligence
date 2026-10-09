@@ -39,6 +39,9 @@
       }
     ]
   },
+  "publicCustomVisuals": [
+    "deneb7E15AEF80B9E4D4F8E12924291ECE89A"
+  ],
   "resourcePackages": [
     {
       "name": "SharedResources",
@@ -48,37 +51,6 @@
           "name": "CY26SU07",
           "path": "BaseThemes/CY26SU07.json",
           "type": "BaseTheme"
-        }
-      ]
-    },
-    {
-      "name": "RegisteredResources",
-      "type": "RegisteredResources",
-      "items": [
-        {
-          "name": "airplane-mode7032635566206531.png",
-          "path": "airplane-mode7032635566206531.png",
-          "type": "Image"
-        },
-        {
-          "name": "bill582174361434925.png",
-          "path": "bill582174361434925.png",
-          "type": "Image"
-        },
-        {
-          "name": "dollar_30371569931567440939929.png",
-          "path": "dollar_30371569931567440939929.png",
-          "type": "Image"
-        },
-        {
-          "name": "goal_10750006937428183370354.png",
-          "path": "goal_10750006937428183370354.png",
-          "type": "Image"
-        },
-        {
-          "name": "growth-chart_91695159807055753718996.png",
-          "path": "growth-chart_91695159807055753718996.png",
-          "type": "Image"
         }
       ]
     }

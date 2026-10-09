@@ -45,7 +45,7 @@ Este dicionário foi gerado a partir dos CSVs e arquivos TMDL confirmados no pro
 | `valor_despesas_reembolsaveis` | Decimal | Despesas reembolsáveis | Arredondado a 2 casas |
 | `gasto_total_realizado` | Decimal | Gasto total realizado | Base do KPI Gasto Total |
 | `valor_referencia` | Decimal | Valor de referência para saving | Usado em `Saving %` |
-| `saving_estimado` | Decimal | Economia estimada | Usado em `Saving Estimado` |
+| `saving_estimado` | Decimal | Economia estimada informada na fonte | Usado em `Saving Estimado`; 30 viagens distintas não reconciliam com `valor_referencia - gasto_total_realizado` |
 
 ## despesas_raw
 
