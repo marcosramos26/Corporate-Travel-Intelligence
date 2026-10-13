@@ -425,7 +425,8 @@ table _Medidas
 			VAR _areaText = IF ( ISBLANK ( _area ), "—", _area )
 			VAR _shareHtml = IF ( _pct = "", "", "<span style='margin-left:8px;font-size:10.5px;font-weight:500;color:#6B7789;'>" & _pct & "</span>" )
 			RETURN
-			    "<div style='display:flex;align-items:center;gap:12px;height:28.5px;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			    IF ( _rank = 1, "<div style='font-family:Segoe UI Semibold,Segoe UI,Tahoma,Arial,sans-serif;font-size:14px;font-weight:600;color:#172B4D;line-height:1.15;margin:2px 0 0 0;'>Gasto por área</div><div style='font-family:Segoe UI,Tahoma,Arial,sans-serif;font-size:11px;color:#6B778C;line-height:1.2;margin:1px 0 8px 0;'>Participação no realizado do período</div>", "" )
+			    & "<div style='display:flex;align-items:center;gap:12px;height:28.5px;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
 			        & "<div style='flex:0 0 13px;font-size:10.5px;font-weight:500;color:#6B7789;text-align:right;font-variant-numeric:tabular-nums;'>" & _rank & "</div>"
 			        & "<div style='flex:0 0 104px;font-size:12.5px;font-weight:500;color:#1D2B3F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & _areaText & "</div>"
 			        & "<div style='flex:1 1 auto;height:10px;border-radius:3px;background:#EEF1F5;overflow:hidden;'>"
@@ -457,7 +458,8 @@ table _Medidas
 			VAR _value = IF ( _blank, "—", _sign & "R$ " & _num )
 			VAR _areaText = IF ( ISBLANK ( _area ), "—", _area )
 			RETURN
-			    "<div style='display:flex;align-items:center;gap:12px;height:28.5px;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			    IF ( RANKX ( ALLSELECTED ( centros_custo_raw[area] ), [Desvio R$], , DESC, DENSE ) = 1, "<div style='font-family:Segoe UI Semibold,Segoe UI,Tahoma,Arial,sans-serif;font-size:14px;font-weight:600;color:#172B4D;line-height:1.15;margin:2px 0 0 0;'>Desvio por área</div><div style='font-family:Segoe UI,Tahoma,Arial,sans-serif;font-size:11px;color:#6B778C;line-height:1.2;margin:1px 0 8px 0;'>Acima ou abaixo do orçado</div>", "" )
+			    & "<div style='display:flex;align-items:center;gap:12px;height:28.5px;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
 			        & "<div style='flex:0 0 104px;font-size:12.5px;font-weight:500;color:#1D2B3F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & _areaText & "</div>"
 			        & "<div style='flex:1 1 auto;position:relative;height:16px;'>"
 			            & "<div style='position:absolute;left:50%;top:0;bottom:0;width:1px;background:#D3D9E3;'></div>"
