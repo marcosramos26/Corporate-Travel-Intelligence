@@ -1,115 +1,65 @@
+<div align="center">
+
 # Corporate Travel Intelligence
 
-Projeto de Business Intelligence para gestão de viagens corporativas, desenvolvido em Power BI no formato PBIP/PBIR. O case combina dados sintéticos, tratamento em Power Query, modelo semântico em TMDL, medidas DAX, design executivo e versionamento da camada visual.
+### Inteligência financeira para transformar viagens corporativas em decisões claras de custo, orçamento e eficiência.
 
-> Os dados são integralmente sintéticos. O projeto foi construído para portfólio e não representa uma empresa ou operação real.
+![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=111827)
+![DAX](https://img.shields.io/badge/DAX-2563EB?style=flat-square&logoColor=white)
+![Power Query](https://img.shields.io/badge/Power_Query-0F8A68?style=flat-square&logoColor=white)
+![PBIP / PBIR](https://img.shields.io/badge/PBIP_%2F_PBIR-172B4D?style=flat-square&logoColor=white)
+![TMDL](https://img.shields.io/badge/TMDL-64748B?style=flat-square&logoColor=white)
 
-![Visão Executiva](assets/dashboard_visao_executiva_clean.png)
+</div>
 
-## Objetivo do projeto
+> **Projeto de portfólio com dados integralmente sintéticos.** Nenhum dado representa uma empresa, pessoa ou operação real.
 
-Consolidar custos, orçamento e indicadores operacionais de viagens para responder duas perguntas principais:
+O **Corporate Travel Intelligence** é uma solução de Business Intelligence desenvolvida em Power BI para acompanhar despesas de viagens, execução orçamentária e eficiência operacional. O projeto combina tratamento de dados, modelagem semântica, medidas DAX, design executivo e autoria versionável em PBIP/PBIR.
 
-1. **Como está a operação?** — visão executiva de gasto, orçamento, volume e tendência.
-2. **Onde estão os gastos e desvios?** — aprofundamento financeiro por mês, categoria, área e centro de custo.
+**7 fontes CSV · 5.000 viagens distintas · 2 páginas analíticas · modelo e relatório versionados como código**
 
-O projeto demonstra competências em modelagem e medidas DAX, Power Query, qualidade de dados, dashboards executivos, autoria PBIP/PBIR como código e documentação técnica.
+## Visão geral
 
-## Estado atual do dashboard
+Custos de viagens normalmente estão distribuídos entre solicitações, despesas, orçamento, aéreo e hospedagem. Sem uma visão integrada, torna-se difícil responder rapidamente:
 
-O relatório possui duas páginas em canvas `1440 × 900`:
+- Quanto foi gasto e como o realizado se compara ao orçamento?
+- Quais áreas e centros de custo concentram os maiores desvios?
+- Como o gasto evolui ao longo do tempo?
+- Quais categorias explicam a composição das despesas registradas?
 
-| Página | Pergunta respondida | Conteúdo atual |
-|---|---|---|
-| `01 - Visão Executiva` | Como está a operação? | Cinco KPIs, tendência mensal, gasto por área, desvio por área e filtros de Área e Período |
-| `02 - Custos & Orçamento` | Onde gastamos e onde estão os desvios? | Cinco KPIs, realizado x orçamento mensal, composição das despesas, desvios por área, comparação por centro de custo e matriz de detalhamento |
+A solução consolida essas fontes em um modelo semântico com calendário e dimensões compartilhadas, oferecendo uma leitura executiva e uma camada de investigação financeira detalhada.
 
-### Página 1 — Visão Executiva
+## Dashboard
 
-- KPIs: Gasto Total, Orçado, Desvio %, Qtd Viagens e Ticket Médio.
-- Tendência mensal: Realizado e Orçado por `DimData[AnoMes]`.
-- Ranking de gasto por área em HTML Content.
-- Desvio orçamentário divergente por área em HTML Content.
-- Filtros de Área e Período.
+### 01 · Visão Executiva
 
-### Página 2 — Custos & Orçamento
+Leitura rápida da operação: gasto total, orçamento, desvio percentual, quantidade de viagens e ticket médio. A página combina tendência mensal, ranking de gasto e desvio orçamentário por área, com filtros de Área e Período.
 
-![Custos e Orçamento](assets/dashboard_custos_orcamento.png)
+![Página 01 — Visão Executiva](assets/dashboard_visao_executiva_clean.png)
 
-- KPIs: Gasto Total, Orçado, Desvio R$, Desvio % e Saving.
-- Orçado x Realizado por mês, com realizado em colunas e orçamento em linha.
-- Composição das despesas por `despesas_raw[categoria]` em barras proporcionais (HTML Content).
-- Desvio por área em barras divergentes (HTML Content).
-- Orçado x Realizado por Centro de Custo.
-- Matriz de detalhamento financeiro.
+### 02 · Custos & Orçamento
 
-### Refinamento analítico identificado
+Aprofundamento financeiro por mês, categoria, área e centro de custo. Inclui composição das despesas, comparação entre realizado e orçamento, ranking de desvios e matriz para investigação dos valores.
 
-Os gráficos `Tendência mensal`, na Página 1, e `Orçado x Realizado por mês`, na Página 2, usam as mesmas medidas e granularidade. Embora tenham representações diferentes, existe sobreposição analítica. A evolução recomendada é manter a tendência na Página 1 e substituir o gráfico da Página 2 por um **Desvio mensal**, com barras divergentes em torno de zero.
+![Página 02 — Custos e Orçamento](assets/dashboard_custos_orcamento.png)
 
-## Regras de negócio essenciais
+## Indicadores e funcionalidades
 
-### Gasto e orçamento
+- **Gasto Total e Orçado** com comparação no contexto dos filtros selecionados.
+- **Desvio R$ e Desvio %**, onde valores positivos indicam gasto acima do orçamento e valores negativos indicam execução abaixo do orçamento.
+- **Quantidade de viagens e Ticket Médio** calculados sobre viagens distintas.
+- **Saving Estimado**, apresentado separadamente do desvio orçamentário e tratado como indicador experimental da fonte.
+- **Tendência mensal** de realizado e orçamento pela dimensão calendário oficial.
+- **Análises por área, categoria e centro de custo**, com rankings, barras proporcionais e detalhamento financeiro.
+- **Filtros de Área e Período** aplicados ao realizado e ao orçamento por dimensões compartilhadas.
 
-- **Gasto Total** é a soma de `viagens_raw[gasto_total_realizado]`.
-- **Orçado** é a soma de `orcamento_raw[orcado]`.
-- O orçamento está no grão **mês × centro de custo**.
-- Realizado e orçamento compartilham o contexto temporal pela `DimData` e o contexto organizacional por `centros_custo_raw`.
-
-### Desvio orçamentário
-
-```DAX
-Desvio R$ = [Gasto Total] - [Orçado]
-```
-
-| Resultado numérico | Interpretação | Cor |
-|---:|---|---|
-| Maior que zero | Gasto acima do orçamento; situação desfavorável | Vermelho |
-| Menor que zero | Gasto abaixo do orçamento; situação favorável | Verde |
-| Igual a zero | Execução exatamente igual ao orçamento | Neutro |
-
-Um desvio exibido como `(R$ 43 mil)` ou `-R$ 43 mil`, em verde, significa que a operação gastou **R$ 43 mil abaixo do orçamento**. Ele é favorável para o negócio, embora seja numericamente negativo.
-
-```DAX
-Desvio % = DIVIDE([Desvio R$], [Orçado], 0)
-```
-
-### Saving não é desvio orçamentário
-
-O desvio compara o realizado com o **orçamento aprovado**. O saving compara o realizado com um **valor de referência da viagem**.
-
-```DAX
-Saving Estimado = SUM(viagens_raw[saving_estimado])
-
-Saving % =
-DIVIDE(
-    [Saving Estimado],
-    SUM(viagens_raw[valor_referencia]),
-    0
-)
-```
-
-Por utilizarem bases diferentes, `Desvio R$` e `Saving Estimado` não precisam coincidir. Exemplo: orçamento de R$ 1.000, referência de R$ 900 e realizado de R$ 800 produzem R$ 200 de desvio favorável e R$ 100 de saving.
-
-> **Limitação conhecida:** no CSV atual, 30 das 5.000 viagens distintas não reconciliam `saving_estimado = valor_referencia - gasto_total_realizado`. A diferença acumulada dessas ocorrências é R$ 65.338,70. Até a regra ser revisada, Saving deve ser tratado como indicador experimental, não como KPI financeiro auditado.
-
-### Composição por categoria
-
-- A composição por categoria usa `SUM(despesas_raw[valor])`.
-- Ela representa a distribuição das **despesas registradas**, não a decomposição integral do `Gasto Total`.
-- Aéreo e hospedagem estão em estruturas próprias e no consolidado de viagens.
-- O orçamento não possui categoria; portanto, não é correto decompor o orçamento em Aéreo, Hospedagem, Alimentação etc.
-- Por esse motivo, o waterfall por categoria não foi implementado. A alternativa adotada foi comparar Orçado e Realizado por Centro de Custo.
-
-As regras completas estão em [docs/business_rules.md](docs/business_rules.md), e o catálogo de medidas em [docs/kpi_dictionary.md](docs/kpi_dictionary.md).
-
-## Arquitetura
+## Arquitetura técnica
 
 ```mermaid
 flowchart LR
-    A[CSVs sintéticos] --> B[Power Query / M]
+    A[7 fontes CSV sintéticas] --> B[Power Query / M]
     B --> C[Modelo semântico TMDL]
-    C --> D[DimData e relacionamentos]
+    C --> D[DimData e dimensões compartilhadas]
     C --> E[Medidas DAX]
     D --> F[Relatório PBIR]
     E --> F
@@ -117,141 +67,83 @@ flowchart LR
     F --> H[Git / GitHub]
 ```
 
-| Camada | Implementação |
-|---|---|
-| Fonte | Sete arquivos CSV sintéticos |
-| Transformação | Consultas M armazenadas nas partitions TMDL |
-| Modelo | Nove tabelas, incluindo `DimData` e `_Medidas` |
-| Métricas | 34 medidas DAX em `_Medidas` (21 de negócio + 13 de apresentação HTML) |
-| Relatório | Duas páginas PBIR, 28 visuais no total |
-| Visual customizado | HTML Content em 14 visuais (KPIs e barras); Deneb permanece registrado, sem uso |
-| Versionamento | PBIP/PBIR, TMDL, JSON, Markdown e Git |
+- **Transformação:** tipagem, tratamento de datas, localidade numérica, duplicidades, grafias inconsistentes e campos ausentes no Power Query.
+- **Modelagem:** fatos de viagens, despesas, orçamento, aéreo e hospedagem conectados a dimensões organizacionais, cadastrais e temporais.
+- **Métricas:** medidas centralizadas em `_Medidas`, com `DimData` explícita e Auto Date/Time desativado.
+- **Apresentação:** visuais nativos e HTML Content para KPIs, rankings e barras analíticas.
+- **Versionamento:** páginas, visuais, medidas e metadados mantidos em PBIP, PBIR, TMDL, JSON e Markdown.
 
-## Modelo de dados
+## Regra financeira central
 
-| Tabela | Papel | Grão |
-|---|---|---|
-| `viagens_raw` | Fato principal | Uma viagem consolidada |
-| `despesas_raw` | Fato de despesas | Uma despesa por viagem |
-| `orcamento_raw` | Fato orçamentário | Um mês por centro de custo |
-| `aereo_raw` | Detalhamento aéreo | Um registro aéreo por viagem |
-| `hospedagem_raw` | Detalhamento de hospedagem | Um registro por viagem |
-| `viajantes_raw` | Dimensão cadastral | Um viajante |
-| `centros_custo_raw` | Dimensão organizacional | Um centro de custo |
-| `DimData` | Dimensão calendário | Um dia entre 2024 e 2025 |
-| `_Medidas` | Tabela técnica | Medidas DAX |
-
-O Auto Date/Time foi desativado. A análise temporal principal depende explicitamente de `DimData[Data]`, relacionada a `viagens_raw[data_ida]` e `orcamento_raw[mes_referencia]`.
-
-Veja [docs/modeling.md](docs/modeling.md) e [docs/data_dictionary.md](docs/data_dictionary.md).
-
-## Dados e qualidade
-
-| Arquivo | Linhas brutas | Chave lógica |
-|---|---:|---|
-| `viagens_raw.csv` | 5.015 | `viagem_id` |
-| `despesas_raw.csv` | 15.402 | `despesa_id` |
-| `orcamento_raw.csv` | 552 | `mes_referencia` + `centro_custo_id` |
-| `aereo_raw.csv` | 4.564 | `viagem_id` |
-| `hospedagem_raw.csv` | 3.999 | `viagem_id` |
-| `viajantes_raw.csv` | 190 | `viajante_id` |
-| `centros_custo_raw.csv` | 23 | `centro_custo_id` |
-
-O Power Query trata tipos, localidade numérica, datas inválidas, duplicidades, grafias inconsistentes e campos ausentes. Depois do tratamento, permanecem 5.000 viagens distintas e 15.372 despesas distintas.
-
-Detalhes em [docs/etl.md](docs/etl.md).
-
-## Design e experiência
-
-O dashboard utiliza um sistema visual corporativo único:
-
-- canvas `1440 × 900` e fundo `#F4F7FB`;
-- header azul-marinho `#0B1F3A`;
-- azul `#2F80ED` para realizado e informação principal;
-- verde `#159B76` exclusivamente para situação favorável;
-- vermelho `#D94B4B` exclusivamente para situação desfavorável;
-- cards brancos, borda `#DCE5F0`, raio de 12 px e sombras mínimas;
-- espaçamento baseado em múltiplos de 8 px;
-- filtros de Área e Período integrados ao header.
-
-Os filtros das duas páginas utilizam os mesmos campos, mas ainda não estão sincronizados entre páginas. Veja [docs/design_system.md](docs/design_system.md).
-
-## Estrutura do repositório
-
-```text
-.
-├── Corporate_Travel_Intelligence.pbip
-├── Corporate_Travel_Intelligence.Report/
-│   └── definition/pages/
-├── Corporate_Travel_Intelligence.SemanticModel/
-│   └── definition/
-├── *_raw.csv
-├── assets/
-├── docs/
-├── scripts/
-│   ├── build_page2.js
-│   └── generate_synthetic_data.py
-├── POWERBI_TECHNICAL_MAP.md
-└── README.md
+```DAX
+Desvio R$ = [Gasto Total] - [Orçado]
 ```
+
+- **Maior que zero:** gasto acima do orçamento, situação desfavorável em vermelho.
+- **Menor que zero:** gasto abaixo do orçamento, situação favorável em verde.
+- **Igual a zero:** execução aderente ao orçamento.
+
+O **Saving Estimado** utiliza o valor de referência da viagem, enquanto o desvio utiliza o orçamento aprovado. As duas métricas possuem bases diferentes e não devem ser reconciliadas como se representassem o mesmo conceito.
+
+## Tecnologias
+
+- **Power BI Desktop**, Power Query / M e DAX
+- **PBIP, PBIR, TMDL e JSON** para autoria e versionamento
+- **HTML Content** para componentes visuais orientados por medidas
+- **Python** para geração determinística de dados sintéticos
+- **Node.js** para automação da estrutura PBIR da Página 02
+- **Git e GitHub** para controle de versão e documentação
 
 ## Como executar
 
 1. Clone o repositório.
-2. Abra `Corporate_Travel_Intelligence.pbip` no Power BI Desktop.
-3. Caso necessário, ajuste os caminhos absolutos dos CSVs nas consultas Power Query.
-4. Atualize os dados.
-5. Navegue entre `01 - Visão Executiva` e `02 - Custos & Orçamento`.
+2. Abra [`Corporate_Travel_Intelligence.pbip`](Corporate_Travel_Intelligence.pbip) no Power BI Desktop.
+3. Ajuste os caminhos locais dos CSVs nas consultas Power Query, se necessário.
+4. Atualize os dados e navegue entre as páginas `01 - Visão Executiva` e `02 - Custos & Orçamento`.
 
-### Validação PBIR
-
-Com o pacote `@microsoft/powerbi-report-authoring-cli` instalado:
+Para validar a estrutura PBIR com o pacote `@microsoft/powerbi-report-authoring-cli` instalado:
 
 ```powershell
 powerbi-report-author validate Corporate_Travel_Intelligence.Report --pretty
 ```
 
-Última validação executada durante a construção da Página 2: **0 erros**. Os avisos restantes estavam limitados à indisponibilidade dos schemas remotos da Microsoft durante a execução.
+## Estrutura principal
+
+```text
+.
+├── Corporate_Travel_Intelligence.pbip
+├── Corporate_Travel_Intelligence.Report/
+├── Corporate_Travel_Intelligence.SemanticModel/
+├── assets/
+├── docs/
+├── scripts/
+├── *_raw.csv
+├── POWERBI_TECHNICAL_MAP.md
+└── README.md
+```
+
+## Documentação técnica
+
+- [Arquitetura](docs/architecture.md) — camadas, componentes e fluxo do projeto.
+- [Regras de negócio](docs/business_rules.md) — semântica financeira, filtros e limitações.
+- [Modelagem](docs/modeling.md) — tabelas, relacionamentos e calendário.
+- [Dicionário de dados](docs/data_dictionary.md) — campos, tipos, grãos e chaves.
+- [Dicionário de KPIs](docs/kpi_dictionary.md) — medidas DAX e interpretação.
+- [ETL e qualidade](docs/etl.md) — transformações e controles de qualidade.
+- [Design system](docs/design_system.md) — identidade visual e padrões de interface.
+- [Decisões técnicas](docs/decisions.md) — ADRs e trade-offs do projeto.
+- [Automação PBIR](docs/pbir_automation.md) — autoria, validação e guardrails.
+- [Mapa técnico do Power BI](POWERBI_TECHNICAL_MAP.md) — páginas, visuais, medidas e caminhos dos artefatos.
 
 ## Limitações conhecidas
 
-- Os caminhos das fontes CSV estão absolutos e precisam ser parametrizados para portabilidade completa.
-- Os filtros Área e Período ainda não estão sincronizados entre as duas páginas.
-- Os dois gráficos mensais atuais apresentam sobreposição analítica.
-- O orçamento não possui granularidade por categoria.
-- O Saving possui 30 registros distintos sem reconciliação com referência menos realizado.
-- Não há refresh em nuvem, RLS, gateway, autenticação ou integração com sistemas reais.
-- O projeto não deve ser usado como benchmark financeiro ou operacional.
-
-## Documentação
-
-| Documento | Conteúdo |
-|---|---|
-| [Regras de negócio](docs/business_rules.md) | Semântica financeira, sinais, cores, grãos e limitações |
-| [Arquitetura](docs/architecture.md) | Camadas, componentes e fluxo técnico |
-| [Modelagem](docs/modeling.md) | Tabelas, relacionamentos e calendário |
-| [Dicionário de dados](docs/data_dictionary.md) | Campos, tipos, grãos e chaves |
-| [Dicionário de KPIs](docs/kpi_dictionary.md) | Medidas DAX e interpretação |
-| [ETL e qualidade](docs/etl.md) | Transformações Power Query |
-| [Design system](docs/design_system.md) | Paleta, layout e padrões visuais |
-| [Decisões técnicas](docs/decisions.md) | ADRs e trade-offs |
-| [Automação PBIR](docs/pbir_automation.md) | Autoria, validação e estrutura visual |
-| [Roadmap](docs/roadmap.md) | Entregas concluídas e próximas etapas |
-| [Auditoria do repositório](docs/repository_audit.md) | Inventário técnico atual |
-| [Mapa técnico PBIR](POWERBI_TECHNICAL_MAP.md) | IDs, caminhos, medidas, HTML Content e regras de edição |
-| [Plano de redesign HTML](PLANO_REDESIGN_HTML_CONTENT.md) | Diagnóstico e plano da camada HTML Content |
-
-## Tecnologias
-
-- Power BI Desktop
-- Power Query / M
-- DAX
-- PBIP / PBIR / JSON
-- TMDL
-- HTML Content (custom visual)
-- Node.js
-- Git e GitHub
+- As consultas M ainda utilizam caminhos absolutos para os CSVs e podem exigir ajuste em outra máquina.
+- Os filtros de Área e Período usam os mesmos campos, mas ainda não estão sincronizados entre páginas.
+- Os gráficos mensais das duas páginas apresentam sobreposição analítica.
+- O orçamento não possui granularidade por categoria; por isso, a composição de despesas não representa uma decomposição do orçamento.
+- Trinta viagens não reconciliam `saving_estimado = valor_referencia - gasto_total_realizado`; o Saving não deve ser tratado como métrica financeira auditada.
+- O projeto não inclui refresh em nuvem, RLS, gateway ou integração com sistemas reais.
 
 ## Autor
 
-Marcos Ramos
+**Marcos Ramos**
