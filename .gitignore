@@ -6,7 +6,8 @@
 *.pbix
 *.pbit
 
-# Local backups generated during PBIR visual editing
+# Local backups generated during PBIR visual editing (not published)
+backup/
 backups/
 
 # OS/editor/cache artifacts
@@ -15,6 +16,8 @@ Desktop.ini
 .DS_Store
 *.tmp
 *.bak
+~$*
+*.log
 
 # Python runtime artifacts
 __pycache__/

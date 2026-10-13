@@ -5,10 +5,10 @@
 - Dataset sintético com sete fontes CSV.
 - Tratamento em Power Query e modelo semântico TMDL.
 - `DimData` explícita e Auto Date/Time desativado.
-- 21 medidas DAX centralizadas.
+- 34 medidas DAX centralizadas (21 de negócio + 13 de apresentação HTML).
 - Página `01 - Visão Executiva` com refinamento visual profissional.
 - Página `02 - Custos & Orçamento` com KPIs, análises financeiras e matriz.
-- Deneb restrito ao desvio divergente da Página 1.
+- HTML Content em KPIs e barras; Deneb registrado sem uso.
 - Gerador determinístico da Página 2 em Node.js.
 - Validação PBIR sem erros estruturais.
 - Documentação técnica, de negócio, dados, KPIs e decisões.

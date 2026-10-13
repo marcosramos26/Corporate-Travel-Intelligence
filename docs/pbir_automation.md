@@ -23,10 +23,10 @@ Corporate_Travel_Intelligence.pbip
 
 | Página | Visuais | Principais tipos |
 |---|---:|---|
-| `01 - Visão Executiva` | 13 | 5 cards, 2 slicers, linha, barras, Deneb e 3 shapes |
-| `02 - Custos & Orçamento` | 15 | 5 cards, 2 slicers, combo, 3 barras, matriz e 3 shapes |
+| `01 - Visão Executiva` | 13 | 5 KPIs HTML, 2 slicers, linha, 2 barras HTML e 3 shapes |
+| `02 - Custos & Orçamento` | 15 | 5 KPIs HTML, 2 slicers, combo, 2 barras HTML, barras por centro de custo, matriz e 3 shapes |
 
-O relatório registra o custom visual certificado Deneb. Seu uso está limitado ao gráfico de desvio por área da Página 1.
+O relatório registra o custom visual HTML Content em 14 visuais (KPIs e barras). O Deneb permanece registrado, mas sem uso.
 
 ## Página 2 reproduzível
 

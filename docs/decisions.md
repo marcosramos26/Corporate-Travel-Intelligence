@@ -94,11 +94,11 @@ Trade-offs: exige disciplina para não duplicar cálculos em visuais.
 
 Contexto: o projeto deve ser fácil de abrir e manter no Power BI.
 
-Decisão: usar visuais nativos do Power BI como padrão e Deneb somente no desvio divergente da Página 1.
+Decisão: usar visuais nativos do Power BI como padrão e HTML Content (custom visual) para KPIs e barras de ranking/desvio/composição.
 
 Motivo: reduz dependências e riscos de compatibilidade, preservando flexibilidade onde o visual nativo não entregou o acabamento necessário.
 
-Trade-offs: a Página 1 passa a depender do pacote certificado do Deneb para um único visual.
+Trade-offs: o HTML Content depende de medidas DAX (`displayFolder: UI_HTML`) e do custom visual registrado no relatório; o Deneb permanece registrado, porém sem uso.
 
 ## ADR-011 — PBIP/PBIR para Versionamento Visual
 

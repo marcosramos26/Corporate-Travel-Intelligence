@@ -144,7 +144,7 @@
             "position": {
               "expr": {
                 "Literal": {
-                  "Value": "'RightCenter'"
+                  "Value": "'TopRight'"
                 }
               }
             },
@@ -167,7 +167,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#475467'"
+                      "Value": "'#6B7789'"
                     }
                   }
                 }
@@ -199,6 +199,24 @@
                   "Value": "false"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#6B7789'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -224,9 +242,8 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 1,
-                      "Percent": 0.2
+                    "Literal": {
+                      "Value": "'#EEF1F5'"
                     }
                   }
                 }
@@ -235,7 +252,7 @@
             "gridlineTransparency": {
               "expr": {
                 "Literal": {
-                  "Value": "94D"
+                  "Value": "0D"
                 }
               }
             },
@@ -252,6 +269,24 @@
                   "Value": "1000000D"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#6B7789'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -264,7 +299,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#2F80ED'"
+                      "Value": "'#2563EB'"
                     }
                   }
                 }
@@ -282,7 +317,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#64748B'"
+                      "Value": "'#173A67'"
                     }
                   }
                 }
@@ -307,14 +342,14 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "3D"
                 }
               }
             },
             "showMarker": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },

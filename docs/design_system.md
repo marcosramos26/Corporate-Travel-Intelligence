@@ -56,7 +56,7 @@ A cor deve ser acompanhada de sinal ou texto explicativo. Um valor verde entre p
 - Legendas compactas.
 - Rótulos apenas quando agregam leitura.
 - Eixos quantitativos podem ser ocultados quando os rótulos já comunicam o valor.
-- Deneb é restrito ao desvio divergente da Página 1.
+- HTML Content é usado nos KPIs e nas barras de gasto/desvio/composição; títulos de seção seguem o padrão dos visuais nativos.
 
 ## Filtros
 

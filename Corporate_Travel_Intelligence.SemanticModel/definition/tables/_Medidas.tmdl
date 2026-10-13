@@ -192,6 +192,379 @@ table _Medidas
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: c2ced0a1-354c-40e9-95a0-3feb28814052
 
+	measure 'HTML KPI - Gasto Total' =
+			VAR _v = [Gasto Total]
+			VAR _blank = ISBLANK ( _v )
+			VAR _orc = [Orçado]
+			VAR _hasBud = NOT ISBLANK ( _orc ) && _orc <> 0
+			VAR _desv = [Desvio R$]
+			VAR _abs = ABS ( _v )
+			VAR _num =
+			    SWITCH (
+			        TRUE (),
+			        _abs >= 1000000000, FORMAT ( _abs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			        _abs >= 1000000, FORMAT ( _abs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			        _abs >= 1000, FORMAT ( _abs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			        FORMAT ( _abs, "#,##0", "pt-BR" )
+			    )
+			VAR _value = IF ( _blank, "—", IF ( _v < 0, "-", "" ) & "R$ " & _num )
+			VAR _oAbs = ABS ( _orc )
+			VAR _oNum =
+			    SWITCH (
+			        TRUE (),
+			        _oAbs >= 1000000000, FORMAT ( _oAbs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			        _oAbs >= 1000000, FORMAT ( _oAbs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			        _oAbs >= 1000, FORMAT ( _oAbs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			        FORMAT ( _oAbs, "#,##0", "pt-BR" )
+			    )
+			VAR _pct = FORMAT ( ABS ( [Desvio %] ), "#,##0.00%", "pt-BR" )
+			VAR _chip =
+			    SWITCH (
+			        TRUE (),
+			        _blank || NOT _hasBud, "",
+			        _desv > 0, "<span style='padding:2px 9px;border-radius:999px;background:#FBEAEA;color:#BE3A3A;font-size:11px;font-weight:600;white-space:nowrap;'>▲ " & _pct & " acima</span>",
+			        _desv < 0, "<span style='padding:2px 9px;border-radius:999px;background:#E4F4EE;color:#0B7A5A;font-size:11px;font-weight:600;white-space:nowrap;'>▼ " & _pct & " abaixo</span>",
+			        "<span style='padding:2px 9px;border-radius:999px;background:#EEF1F5;color:#5B6779;font-size:11px;font-weight:600;white-space:nowrap;'>no orçamento</span>"
+			    )
+			VAR _caption =
+			    IF (
+			        _blank,
+			        "Sem dados para os filtros atuais",
+			        IF ( _hasBud, "Orçado R$ " & IF ( _orc < 0, "-", "" ) & _oNum, "Realizado no período selecionado" )
+			    )
+			RETURN
+			    "<div style='display:flex;flex-direction:column;justify-content:center;height:100%;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<div style='display:flex;align-items:center;justify-content:space-between;'>"
+			            & "<span style='font-size:11px;font-weight:600;letter-spacing:.01em;color:#344054;'>Gasto total</span>"
+			            & _chip
+			        & "</div>"
+			        & "<div style='margin-top:6px;font-size:26px;font-weight:600;color:#172B4D;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums;'>" & _value & "</div>"
+			        & "<div style='margin-top:6px;font-size:11px;color:#667085;'>" & _caption & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: a699b0e2-b69a-4748-aa73-217c28274749
+
+	measure 'HTML KPI - Orçado' =
+			VAR _v = [Orçado]
+			VAR _blank = ISBLANK ( _v )
+			VAR _abs = ABS ( _v )
+			VAR _num =
+			    SWITCH (
+			        TRUE (),
+			        _abs >= 1000000000, FORMAT ( _abs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			        _abs >= 1000000, FORMAT ( _abs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			        _abs >= 1000, FORMAT ( _abs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			        FORMAT ( _abs, "#,##0", "pt-BR" )
+			    )
+			VAR _value = IF ( _blank, "—", IF ( _v < 0, "-", "" ) & "R$ " & _num )
+			VAR _caption = IF ( _blank, "Sem dados para os filtros atuais", "Orçamento do período selecionado" )
+			RETURN
+			    "<div style='display:flex;flex-direction:column;justify-content:center;height:100%;padding-left:24px;border-left:1px solid #DCE5F0;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<span style='font-size:11px;font-weight:600;letter-spacing:.01em;color:#344054;'>Orçado</span>"
+			        & "<div style='margin-top:6px;font-size:26px;font-weight:600;color:#172B4D;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums;'>" & _value & "</div>"
+			        & "<div style='margin-top:6px;font-size:11px;color:#667085;'>" & _caption & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: 23d4ba65-7ba8-4851-9737-93ad115af2e8
+
+	measure 'HTML KPI - Desvio vs Orçado' =
+			VAR _pct = [Desvio %]
+			VAR _rs = [Desvio R$]
+			VAR _orc = [Orçado]
+			VAR _hasBud = NOT ISBLANK ( _orc ) && _orc <> 0
+			VAR _blank = ISBLANK ( _pct )
+			VAR _pctTxt = FORMAT ( ABS ( _pct ), "#,##0.00%", "pt-BR" )
+			VAR _sign = SWITCH ( TRUE (), _pct > 0, "+", _pct < 0, "−", "" )
+			VAR _value = IF ( _blank, "—", _sign & _pctTxt )
+			VAR _color = SWITCH ( TRUE (), _pct > 0, "#BE3A3A", _pct < 0, "#0B7A5A", "#172B4D" )
+			VAR _rsTxt = "R$ " & FORMAT ( ABS ( _rs ), "#,##0", "pt-BR" )
+			VAR _caption =
+			    SWITCH (
+			        TRUE (),
+			        _blank, "Sem dados para os filtros atuais",
+			        NOT _hasBud, "Sem orçamento no período",
+			        _rs > 0, _rsTxt & " acima do orçamento",
+			        _rs < 0, _rsTxt & " abaixo do orçamento",
+			        "No orçamento do período"
+			    )
+			RETURN
+			    "<div style='display:flex;flex-direction:column;justify-content:center;height:100%;padding-left:24px;border-left:1px solid #DCE5F0;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<span style='font-size:11px;font-weight:600;letter-spacing:.01em;color:#344054;'>Desvio vs orçado</span>"
+			        & "<div style='margin-top:6px;font-size:26px;font-weight:600;color:" & _color & ";line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums;'>" & _value & "</div>"
+			        & "<div style='margin-top:6px;font-size:11px;color:#667085;'>" & _caption & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: ac259b68-0713-47b5-b1b4-4228f4b1c260
+
+	measure 'HTML KPI - Qtd Viagens' =
+			VAR _v = [Qtd Viagens]
+			VAR _blank = ISBLANK ( _v )
+			VAR _value = IF ( _blank, "—", FORMAT ( _v, "#,##0", "pt-BR" ) )
+			VAR _caption = IF ( _blank, "Sem dados para os filtros atuais", "Viagens distintas no período" )
+			RETURN
+			    "<div style='display:flex;flex-direction:column;justify-content:center;height:100%;padding-left:24px;border-left:1px solid #DCE5F0;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<span style='font-size:11px;font-weight:600;letter-spacing:.01em;color:#344054;'>Qtd viagens</span>"
+			        & "<div style='margin-top:6px;font-size:26px;font-weight:600;color:#172B4D;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums;'>" & _value & "</div>"
+			        & "<div style='margin-top:6px;font-size:11px;color:#667085;'>" & _caption & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: a03d1146-0cfd-4fea-ba0b-86643b6e0c1d
+
+	measure 'HTML KPI - Ticket Médio' =
+			VAR _v = [Ticket Médio]
+			VAR _blank = ISBLANK ( _v )
+			VAR _value = IF ( _blank, "—", IF ( _v < 0, "-", "" ) & "R$ " & FORMAT ( ABS ( _v ), "#,##0.00", "pt-BR" ) )
+			VAR _caption = IF ( _blank, "Sem dados para os filtros atuais", "Gasto por viagem" )
+			RETURN
+			    "<div style='display:flex;flex-direction:column;justify-content:center;height:100%;padding-left:24px;border-left:1px solid #DCE5F0;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<span style='font-size:11px;font-weight:600;letter-spacing:.01em;color:#344054;'>Ticket médio</span>"
+			        & "<div style='margin-top:6px;font-size:26px;font-weight:600;color:#172B4D;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums;'>" & _value & "</div>"
+			        & "<div style='margin-top:6px;font-size:11px;color:#667085;'>" & _caption & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: 86dc4211-8f6f-4392-bd9e-cd9bccaf718a
+
+	measure 'HTML KPI - Desvio R$' =
+			VAR _v = [Desvio R$]
+			VAR _blank = ISBLANK ( _v )
+			VAR _abs = ABS ( _v )
+			VAR _num =
+			    SWITCH (
+			        TRUE (),
+			        _abs >= 1000000000, FORMAT ( _abs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			        _abs >= 1000000, FORMAT ( _abs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			        _abs >= 1000, FORMAT ( _abs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			        FORMAT ( _abs, "#,##0", "pt-BR" )
+			    )
+			VAR _sign = SWITCH ( TRUE (), _v > 0, "+", _v < 0, "−", "" )
+			VAR _value = IF ( _blank, "—", _sign & "R$ " & _num )
+			VAR _color = SWITCH ( TRUE (), _blank, "#172B4D", _v > 0, "#BE3A3A", _v < 0, "#0B7A5A", "#172B4D" )
+			VAR _caption =
+			    SWITCH (
+			        TRUE (),
+			        _blank, "Sem dados para os filtros atuais",
+			        _v > 0, "Acima do orçamento",
+			        _v < 0, "Abaixo do orçamento",
+			        "No orçamento do período"
+			    )
+			RETURN
+			    "<div style='display:flex;flex-direction:column;justify-content:center;height:100%;padding-left:24px;border-left:1px solid #DCE5F0;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<span style='font-size:11px;font-weight:600;letter-spacing:.01em;color:#344054;'>Desvio R$</span>"
+			        & "<div style='margin-top:6px;font-size:26px;font-weight:600;color:" & _color & ";line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums;'>" & _value & "</div>"
+			        & "<div style='margin-top:6px;font-size:11px;color:#667085;'>" & _caption & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: e750a6df-8c80-4082-8ad3-ece48c003057
+
+	measure 'HTML KPI - Desvio %' =
+			VAR _v = [Desvio %]
+			VAR _blank = ISBLANK ( _v )
+			VAR _txt = FORMAT ( ABS ( _v ), "#,##0.00%", "pt-BR" )
+			VAR _sign = SWITCH ( TRUE (), _v > 0, "+", _v < 0, "−", "" )
+			VAR _value = IF ( _blank, "—", _sign & _txt )
+			VAR _color = SWITCH ( TRUE (), _blank, "#172B4D", _v > 0, "#BE3A3A", _v < 0, "#0B7A5A", "#172B4D" )
+			VAR _caption =
+			    SWITCH (
+			        TRUE (),
+			        _blank, "Sem dados para os filtros atuais",
+			        _v > 0, "Acima do orçamento",
+			        _v < 0, "Abaixo do orçamento",
+			        "No orçamento do período"
+			    )
+			RETURN
+			    "<div style='display:flex;flex-direction:column;justify-content:center;height:100%;padding-left:24px;border-left:1px solid #DCE5F0;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<span style='font-size:11px;font-weight:600;letter-spacing:.01em;color:#344054;'>Desvio %</span>"
+			        & "<div style='margin-top:6px;font-size:26px;font-weight:600;color:" & _color & ";line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums;'>" & _value & "</div>"
+			        & "<div style='margin-top:6px;font-size:11px;color:#667085;'>" & _caption & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: 74ef6dd5-cad3-4e4a-95c9-f5f14614551a
+
+	measure 'HTML KPI - Saving' =
+			VAR _v = [Saving Estimado]
+			VAR _blank = ISBLANK ( _v )
+			VAR _abs = ABS ( _v )
+			VAR _num =
+			    SWITCH (
+			        TRUE (),
+			        _abs >= 1000000000, FORMAT ( _abs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			        _abs >= 1000000, FORMAT ( _abs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			        _abs >= 1000, FORMAT ( _abs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			        FORMAT ( _abs, "#,##0", "pt-BR" )
+			    )
+			VAR _value = IF ( _blank, "—", IF ( _v < 0, "-", "" ) & "R$ " & _num )
+			VAR _caption = IF ( _blank, "Sem dados para os filtros atuais", "Economia estimada no período" )
+			RETURN
+			    "<div style='display:flex;flex-direction:column;justify-content:center;height:100%;padding-left:24px;border-left:1px solid #DCE5F0;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<span style='font-size:11px;font-weight:600;letter-spacing:.01em;color:#344054;'>Saving</span>"
+			        & "<div style='margin-top:6px;font-size:26px;font-weight:600;color:" & "#0B7A5A" & ";line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums;'>" & _value & "</div>"
+			        & "<div style='margin-top:6px;font-size:11px;color:#667085;'>" & _caption & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: 23de805b-aa01-49c7-a242-689ee6306874
+
+	measure 'HTML Barras - Gasto por Área' =
+			VAR _area = SELECTEDVALUE ( centros_custo_raw[area] )
+			VAR _v = [Gasto Total]
+			VAR _max = MAXX ( ALLSELECTED ( centros_custo_raw[area] ), [Gasto Total] )
+			VAR _total = CALCULATE ( [Gasto Total], ALLSELECTED ( centros_custo_raw[area] ) )
+			VAR _share = DIVIDE ( _v, _total )
+			VAR _pct = IF ( ISBLANK ( _share ) || _share = 0, "", FORMAT ( _share, "#,##0.0%", "pt-BR" ) )
+			VAR _w = FORMAT ( MIN ( 100, DIVIDE ( _v, _max, 0 ) * 100 ), "0.0", "en-US" )
+			VAR _rank = RANKX ( ALLSELECTED ( centros_custo_raw[area] ), [Gasto Total], , DESC, DENSE )
+			VAR _abs = ABS ( _v )
+			VAR _num =
+			    SWITCH (
+			        TRUE (),
+			        _abs >= 1000000000, FORMAT ( _abs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			        _abs >= 1000000, FORMAT ( _abs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			        _abs >= 1000, FORMAT ( _abs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			        FORMAT ( _abs, "#,##0", "pt-BR" )
+			    )
+			VAR _label = IF ( ISBLANK ( _v ), "—", IF ( _v < 0, "-", "" ) & "R$ " & _num )
+			VAR _areaText = IF ( ISBLANK ( _area ), "—", _area )
+			VAR _shareHtml = IF ( _pct = "", "", "<span style='margin-left:8px;font-size:10.5px;font-weight:500;color:#6B7789;'>" & _pct & "</span>" )
+			RETURN
+			    "<div style='display:flex;align-items:center;gap:12px;height:28.5px;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<div style='flex:0 0 13px;font-size:10.5px;font-weight:500;color:#6B7789;text-align:right;font-variant-numeric:tabular-nums;'>" & _rank & "</div>"
+			        & "<div style='flex:0 0 104px;font-size:12.5px;font-weight:500;color:#1D2B3F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & _areaText & "</div>"
+			        & "<div style='flex:1 1 auto;height:10px;border-radius:3px;background:#EEF1F5;overflow:hidden;'>"
+			            & "<div style='height:100%;width:" & _w & "%;background:#2563EB;border-radius:3px;'></div>"
+			        & "</div>"
+			        & "<div style='flex:0 0 124px;text-align:right;font-size:12.5px;font-weight:600;color:#1D2B3F;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & _label & _shareHtml & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: 2ffe1c1a-a728-4e4b-b89c-4dd0fbd1003f
+
+	measure 'HTML Barras - Desvio por Área' =
+			VAR _area = SELECTEDVALUE ( centros_custo_raw[area] )
+			VAR _d = [Desvio R$]
+			VAR _blank = ISBLANK ( _d )
+			VAR _max = MAXX ( ALLSELECTED ( centros_custo_raw[area] ), ABS ( [Desvio R$] ) )
+			VAR _w = IF ( _blank, "0", FORMAT ( MIN ( 50, DIVIDE ( ABS ( _d ), _max, 0 ) * 50 ), "0.00", "en-US" ) )
+			VAR _side = IF ( _d > 0, "left:50%", "right:50%" )
+			VAR _color = SWITCH ( TRUE (), _blank, "#6B7789", _d > 0, "#C63C3C", _d < 0, "#0E8A66", "#6B7789" )
+			VAR _sign = SWITCH ( TRUE (), _blank, "", _d > 0, "+", _d < 0, "−", "" )
+			VAR _abs = ABS ( _d )
+			VAR _num =
+			    SWITCH (
+			        TRUE (),
+			        _abs >= 1000000000, FORMAT ( _abs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			        _abs >= 1000000, FORMAT ( _abs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			        _abs >= 1000, FORMAT ( _abs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			        FORMAT ( _abs, "#,##0", "pt-BR" )
+			    )
+			VAR _value = IF ( _blank, "—", _sign & "R$ " & _num )
+			VAR _areaText = IF ( ISBLANK ( _area ), "—", _area )
+			RETURN
+			    "<div style='display:flex;align-items:center;gap:12px;height:28.5px;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<div style='flex:0 0 104px;font-size:12.5px;font-weight:500;color:#1D2B3F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & _areaText & "</div>"
+			        & "<div style='flex:1 1 auto;position:relative;height:16px;'>"
+			            & "<div style='position:absolute;left:50%;top:0;bottom:0;width:1px;background:#D3D9E3;'></div>"
+			            & "<div style='position:absolute;top:4px;height:8px;border-radius:2px;" & _side & ";width:" & _w & "%;background:" & _color & ";'></div>"
+			        & "</div>"
+			        & "<div style='flex:0 0 124px;text-align:right;font-size:12.5px;font-weight:600;color:" & _color & ";font-variant-numeric:tabular-nums;white-space:nowrap;'>" & _value & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: f2ea572e-6ef1-497d-bfe4-8f3db34b07f8
+
+	measure 'HTML Barras - Composição do Gasto' =
+			VAR _rows =
+			    FILTER (
+			        ADDCOLUMNS (
+			            ALLSELECTED ( despesas_raw[categoria] ),
+			            "__Valor", CALCULATE ( SUM ( despesas_raw[valor] ) )
+			        ),
+			        NOT ISBLANK ( [__Valor] )
+			    )
+			VAR _max = MAXX ( _rows, [__Valor] )
+			VAR _total = SUMX ( _rows, [__Valor] )
+			VAR _body =
+			    CONCATENATEX (
+			        _rows,
+			        VAR _cat = despesas_raw[categoria]
+			        VAR _v = [__Valor]
+			        VAR _share = DIVIDE ( _v, _total )
+			        VAR _pct = IF ( ISBLANK ( _share ) || _share = 0, "", FORMAT ( _share, "#,##0.0%", "pt-BR" ) )
+			        VAR _w = FORMAT ( MAX ( 0, MIN ( 100, DIVIDE ( _v, _max, 0 ) * 100 ) ), "0.0", "en-US" )
+			        VAR _rank = RANKX ( _rows, [__Valor], _v, DESC, DENSE )
+			        VAR _abs = ABS ( _v )
+			        VAR _num =
+			            SWITCH (
+			                TRUE (),
+			                _abs >= 1000000000, FORMAT ( _abs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			                _abs >= 1000000, FORMAT ( _abs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			                _abs >= 1000, FORMAT ( _abs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			                FORMAT ( _abs, "#,##0", "pt-BR" )
+			            )
+			        VAR _label = IF ( _v < 0, "-", "" ) & "R$ " & _num
+			        VAR _catText = IF ( ISBLANK ( _cat ), "—", _cat )
+			        VAR _shareHtml = IF ( _pct = "", "", "<span style='margin-left:6px;font-size:10px;font-weight:500;color:#6B7789;'>" & _pct & "</span>" )
+			        RETURN
+			            "<div style='display:flex;align-items:center;gap:14px;height:22px;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			                & "<div style='flex:0 0 13px;font-size:10.5px;font-weight:500;color:#6B7789;text-align:right;font-variant-numeric:tabular-nums;'>" & _rank & "</div>"
+			                & "<div style='flex:0 0 130px;font-size:12px;font-weight:500;color:#1D2B3F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & _catText & "</div>"
+			                & "<div style='flex:1 1 auto;height:10px;border-radius:3px;background:#EEF1F5;overflow:hidden;'>"
+			                    & "<div style='height:100%;width:" & _w & "%;background:#2563EB;border-radius:3px;'></div>"
+			                & "</div>"
+			                & "<div style='flex:0 0 116px;text-align:right;font-size:12px;font-weight:600;color:#1D2B3F;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & _label & _shareHtml & "</div>"
+			                & "</div>",
+			        "",
+			        [__Valor], DESC,
+			        despesas_raw[categoria], ASC
+			    )
+			RETURN
+			    "<div style='width:100%;height:100%;box-sizing:border-box;overflow:hidden;'>"
+			        & "<div style='font-family:Segoe UI Semibold,Segoe UI,Tahoma,Arial,sans-serif;font-size:14px;font-weight:600;color:#172B4D;line-height:1.1;margin:2px 0 6px 0;'>Composição do gasto</div>"
+			        & _body
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: 9989f589-0fe2-49b4-8608-372550a304d7
+
+	measure 'HTML Barras - Desvio por Área (P2)' =
+			VAR _area = SELECTEDVALUE ( centros_custo_raw[area] )
+			VAR _d = [Desvio R$]
+			VAR _blank = ISBLANK ( _d )
+			VAR _max = MAXX ( ALLSELECTED ( centros_custo_raw[area] ), ABS ( [Desvio R$] ) )
+			VAR _w = IF ( _blank, "0", FORMAT ( MIN ( 50, DIVIDE ( ABS ( _d ), _max, 0 ) * 50 ), "0.00", "en-US" ) )
+			VAR _side = IF ( _d > 0, "left:50%", "right:50%" )
+			VAR _color = SWITCH ( TRUE (), _blank, "#6B7789", _d > 0, "#C63C3C", _d < 0, "#0E8A66", "#6B7789" )
+			VAR _sign = SWITCH ( TRUE (), _blank, "", _d > 0, "+", _d < 0, "−", "" )
+			VAR _abs = ABS ( _d )
+			VAR _num =
+			    SWITCH (
+			        TRUE (),
+			        _abs >= 1000000000, FORMAT ( _abs / 1000000000, "#,##0.00", "pt-BR" ) & " Bi",
+			        _abs >= 1000000, FORMAT ( _abs / 1000000, "#,##0.00", "pt-BR" ) & " Mi",
+			        _abs >= 1000, FORMAT ( _abs / 1000, "#,##0.0", "pt-BR" ) & " mil",
+			        FORMAT ( _abs, "#,##0", "pt-BR" )
+			    )
+			VAR _value = IF ( _blank, "—", _sign & "R$ " & _num )
+			VAR _areaText = IF ( ISBLANK ( _area ), "—", _area )
+			RETURN
+			    IF ( RANKX ( ALLSELECTED ( centros_custo_raw[area] ), [Desvio R$], , DESC, DENSE ) = 1, "<div style='font-family:Segoe UI Semibold,Segoe UI,Tahoma,Arial,sans-serif;font-size:14px;font-weight:600;color:#172B4D;line-height:1.1;margin:2px 0 6px 0;'>Desvio por área</div>", "" )
+			    & "<div style='display:flex;align-items:center;gap:14px;height:19px;font-family:Segoe UI,Tahoma,Arial,sans-serif;'>"
+			        & "<div style='flex:0 0 104px;font-size:12px;font-weight:500;color:#1D2B3F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & _areaText & "</div>"
+			        & "<div style='flex:1 1 auto;position:relative;height:14px;'>"
+			            & "<div style='position:absolute;left:50%;top:0;bottom:0;width:1px;background:#D3D9E3;'></div>"
+			            & "<div style='position:absolute;top:4px;height:7px;border-radius:2px;" & _side & ";width:" & _w & "%;background:" & _color & ";'></div>"
+			        & "</div>"
+			        & "<div style='flex:0 0 124px;text-align:right;font-size:12px;font-weight:600;color:" & _color & ";font-variant-numeric:tabular-nums;white-space:nowrap;'>" & _value & "</div>"
+			        & "</div>"
+		displayFolder: UI_HTML
+		lineageTag: d33c9d2f-dba3-4dbe-aef2-0274da4073c8
+
+	measure 'Rank Desvio Centro' =
+			RANKX (
+			    ALLSELECTED ( centros_custo_raw[centro_custo] ),
+			    ABS ( [Desvio R$] ),
+			    ,
+			    DESC,
+			    DENSE
+			)
+		displayFolder: UI_HTML
+		lineageTag: 6cf51fab-2d7d-4193-b44a-0154c8a37f27
+
 	column Column
 		formatString: 0
 		lineageTag: b963e562-5d5e-4764-bd5b-28a65655491b

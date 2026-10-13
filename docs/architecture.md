@@ -44,7 +44,7 @@ flowchart TD
 - Página `01 - Visão Executiva`: 13 visuais.
 - Página `02 - Custos & Orçamento`: 15 visuais.
 - Canvas das duas páginas: `1440 × 900`.
-- Deneb/Vega-Lite é usado somente no gráfico divergente da Página 1; os demais visuais analíticos são nativos.
+- Os visuais analíticos incluem HTML Content (KPIs e barras de gasto, desvio e composição) e visuais nativos (combo mensal, barras por centro de custo e matriz); o Deneb permanece registrado no relatório, sem uso.
 
 ## Reprodutibilidade
 

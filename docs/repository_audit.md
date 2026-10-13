@@ -1,6 +1,6 @@
 # Auditoria do Repositório
 
-Data da atualização: 09/10/2026.
+Data da atualização: 13/10/2026.
 
 ## Estrutura confirmada
 
@@ -11,6 +11,7 @@ Data da atualização: 09/10/2026.
 - `assets/`
 - `docs/`
 - `scripts/build_page2.js`
+- `scripts/generate_synthetic_data.py`
 - `.gitignore`
 
 ## Git
@@ -29,7 +30,7 @@ O repositório de trabalho contém um toolkit de agente (`AGENTS.md`, `skills/`,
 
 - Sete CSVs brutos na raiz.
 - Nove tabelas no modelo: sete fontes, `DimData` e `_Medidas`.
-- 21 medidas DAX.
+- 34 medidas DAX (21 de negócio + 13 de apresentação HTML).
 - O relatório referencia o modelo por caminho relativo em `definition.pbir`.
 - As consultas M ainda referenciam caminhos locais absolutos para os CSVs.
 

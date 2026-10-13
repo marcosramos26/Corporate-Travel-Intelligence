@@ -28,8 +28,8 @@ O relatório possui duas páginas em canvas `1440 × 900`:
 
 - KPIs: Gasto Total, Orçado, Desvio %, Qtd Viagens e Ticket Médio.
 - Tendência mensal: Realizado e Orçado por `DimData[AnoMes]`.
-- Ranking de gasto por área.
-- Desvio orçamentário divergente por área em Deneb/Vega-Lite.
+- Ranking de gasto por área em HTML Content.
+- Desvio orçamentário divergente por área em HTML Content.
 - Filtros de Área e Período.
 
 ### Página 2 — Custos & Orçamento
@@ -38,8 +38,8 @@ O relatório possui duas páginas em canvas `1440 × 900`:
 
 - KPIs: Gasto Total, Orçado, Desvio R$, Desvio % e Saving.
 - Orçado x Realizado por mês, com realizado em colunas e orçamento em linha.
-- Composição das despesas por `despesas_raw[categoria]`.
-- Desvio por Área com hierarquia Área → Centro de Custo.
+- Composição das despesas por `despesas_raw[categoria]` em barras proporcionais (HTML Content).
+- Desvio por área em barras divergentes (HTML Content).
 - Orçado x Realizado por Centro de Custo.
 - Matriz de detalhamento financeiro.
 
@@ -122,9 +122,9 @@ flowchart LR
 | Fonte | Sete arquivos CSV sintéticos |
 | Transformação | Consultas M armazenadas nas partitions TMDL |
 | Modelo | Nove tabelas, incluindo `DimData` e `_Medidas` |
-| Métricas | 21 medidas DAX centralizadas em `_Medidas` |
+| Métricas | 34 medidas DAX em `_Medidas` (21 de negócio + 13 de apresentação HTML) |
 | Relatório | Duas páginas PBIR, 28 visuais no total |
-| Visual customizado | Deneb somente no desvio por área da Página 1 |
+| Visual customizado | HTML Content em 14 visuais (KPIs e barras); Deneb permanece registrado, sem uso |
 | Versionamento | PBIP/PBIR, TMDL, JSON, Markdown e Git |
 
 ## Modelo de dados
@@ -189,7 +189,9 @@ Os filtros das duas páginas utilizam os mesmos campos, mas ainda não estão si
 ├── assets/
 ├── docs/
 ├── scripts/
-│   └── build_page2.js
+│   ├── build_page2.js
+│   └── generate_synthetic_data.py
+├── POWERBI_TECHNICAL_MAP.md
 └── README.md
 ```
 
@@ -236,6 +238,8 @@ powerbi-report-author validate Corporate_Travel_Intelligence.Report --pretty
 | [Automação PBIR](docs/pbir_automation.md) | Autoria, validação e estrutura visual |
 | [Roadmap](docs/roadmap.md) | Entregas concluídas e próximas etapas |
 | [Auditoria do repositório](docs/repository_audit.md) | Inventário técnico atual |
+| [Mapa técnico PBIR](POWERBI_TECHNICAL_MAP.md) | IDs, caminhos, medidas, HTML Content e regras de edição |
+| [Plano de redesign HTML](PLANO_REDESIGN_HTML_CONTENT.md) | Diagnóstico e plano da camada HTML Content |
 
 ## Tecnologias
 
@@ -244,7 +248,7 @@ powerbi-report-author validate Corporate_Travel_Intelligence.Report --pretty
 - DAX
 - PBIP / PBIR / JSON
 - TMDL
-- Deneb / Vega-Lite
+- HTML Content (custom visual)
 - Node.js
 - Git e GitHub
 

@@ -10,10 +10,28 @@
     "tabOrder": 9000
   },
   "visual": {
-    "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
+    "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
     "query": {
       "queryState": {
-        "dataset": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "HTML Barras - Desvio por Área"
+                }
+              },
+              "queryRef": "_Medidas.HTML Barras - Desvio por Área",
+              "nativeQueryRef": "HTML Barras - Desvio por Área"
+            }
+          ]
+        },
+        "sampling": {
           "projections": [
             {
               "field": {
@@ -28,9 +46,12 @@
               },
               "queryRef": "centros_custo_raw.area",
               "nativeQueryRef": "area",
-              "active": true,
-              "displayName": "Area"
-            },
+              "active": true
+            }
+          ]
+        },
+        "tooltips": {
+          "projections": [
             {
               "field": {
                 "Measure": {
@@ -43,9 +64,7 @@
                 }
               },
               "queryRef": "_Medidas.Gasto Total",
-              "nativeQueryRef": "Gasto Total",
-              "active": false,
-              "displayName": "Realizado"
+              "nativeQueryRef": "Gasto Total"
             },
             {
               "field": {
@@ -59,9 +78,7 @@
                 }
               },
               "queryRef": "_Medidas.Orçado",
-              "nativeQueryRef": "Orçado",
-              "active": false,
-              "displayName": "Orcado"
+              "nativeQueryRef": "Orçado"
             },
             {
               "field": {
@@ -75,9 +92,7 @@
                 }
               },
               "queryRef": "_Medidas.Desvio R$",
-              "nativeQueryRef": "Desvio R$",
-              "active": false,
-              "displayName": "Desvio"
+              "nativeQueryRef": "Desvio R$"
             },
             {
               "field": {
@@ -91,9 +106,7 @@
                 }
               },
               "queryRef": "_Medidas.Desvio %",
-              "nativeQueryRef": "Desvio %",
-              "active": false,
-              "displayName": "DesvioPct"
+              "nativeQueryRef": "Desvio %"
             }
           ]
         }
@@ -118,116 +131,13 @@
       }
     },
     "objects": {
-      "vega": [
+      "crossFilter": [
         {
           "properties": {
-            "jsonSpec": {
-              "expr": {
-                "Literal": {
-                  "Value": "'{\"$schema\":\"https://vega.github.io/schema/vega-lite/v5.json\",\"data\":{\"name\":\"dataset\"},\"width\":\"container\",\"height\":\"container\",\"autosize\":{\"type\":\"fit\",\"contains\":\"padding\"},\"padding\":{\"left\":0,\"right\":12,\"top\":4,\"bottom\":0},\"title\":{\"text\":\"Desvio por área\",\"subtitle\":[\"Vermelho: acima | Verde: abaixo do orçamento\"],\"anchor\":\"start\",\"font\":\"Segoe UI Semibold\",\"fontSize\":15,\"fontWeight\":600,\"color\":\"#172B4D\",\"subtitleFont\":\"Segoe UI\",\"subtitleFontSize\":10,\"subtitleColor\":\"#6B778C\",\"offset\":18},\"transform\":[{\"filter\":\"isValid(datum.Desvio)\"},{\"calculate\":\"abs(datum.Desvio)\",\"as\":\"AbsDesvio\"},{\"joinaggregate\":[{\"op\":\"max\",\"field\":\"AbsDesvio\",\"as\":\"MaxAbs\"}]},{\"calculate\":\"datum.MaxAbs === 0 ? 0 : datum.Desvio / datum.MaxAbs\",\"as\":\"DesvioNorm\"},{\"calculate\":\"(datum.Desvio < 0 ? \\\"−R$ \\\" : \\\"R$ \\\") + replace(format(abs(datum.Desvio) >= 1000000 ? abs(datum.Desvio)/1000000 : abs(datum.Desvio)/1000, abs(datum.Desvio) >= 1000000 ? \\\".2f\\\" : \\\".1f\\\"), \\\".\\\", \\\",\\\") + (abs(datum.Desvio) >= 1000000 ? \\\" Mi\\\" : \\\" Mil\\\")\",\"as\":\"Rotulo\"}],\"encoding\":{\"y\":{\"field\":\"Area\",\"type\":\"nominal\",\"sort\":{\"op\":\"sum\",\"field\":\"Desvio\",\"order\":\"descending\"},\"axis\":{\"labelPadding\":10,\"labelLimit\":110}}},\"layer\":[{\"mark\":{\"type\":\"rule\",\"color\":\"#CBD5E1\",\"strokeWidth\":1},\"encoding\":{\"x\":{\"datum\":0,\"scale\":{\"domain\":[-1.15,1.15]}}}},{\"mark\":{\"type\":\"bar\",\"cornerRadiusEnd\":4,\"height\":{\"band\":0.56}},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"color\":{\"condition\":[{\"test\":\"datum.Desvio > 0\",\"value\":\"#D64545\"},{\"test\":\"datum.Desvio < 0\",\"value\":\"#0F9D76\"}],\"value\":\"#94A3B8\"},\"tooltip\":[{\"field\":\"Area\",\"type\":\"nominal\",\"title\":\"Área\"},{\"field\":\"Realizado\",\"type\":\"quantitative\",\"title\":\"Realizado\",\"format\":\",.2f\"},{\"field\":\"Orcado\",\"type\":\"quantitative\",\"title\":\"Orçado\",\"format\":\",.2f\"},{\"field\":\"Desvio\",\"type\":\"quantitative\",\"title\":\"Desvio\",\"format\":\",.2f\"},{\"field\":\"DesvioPct\",\"type\":\"quantitative\",\"title\":\"Desvio %\",\"format\":\".2%\"}]}},{\"transform\":[{\"filter\":\"datum.DesvioNorm >= 0.25\"}],\"mark\":{\"type\":\"text\",\"align\":\"right\",\"baseline\":\"middle\",\"dx\":-7,\"font\":\"Segoe UI\",\"fontSize\":10,\"fontWeight\":600,\"color\":\"#FFFFFF\"},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"text\":{\"field\":\"Rotulo\"}}},{\"transform\":[{\"filter\":\"datum.DesvioNorm >= 0 && datum.DesvioNorm < 0.25\"}],\"mark\":{\"type\":\"text\",\"align\":\"left\",\"baseline\":\"middle\",\"dx\":7,\"font\":\"Segoe UI\",\"fontSize\":10,\"color\":\"#475467\"},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"text\":{\"field\":\"Rotulo\"}}},{\"transform\":[{\"filter\":\"datum.DesvioNorm <= -0.25\"}],\"mark\":{\"type\":\"text\",\"align\":\"left\",\"baseline\":\"middle\",\"dx\":7,\"font\":\"Segoe UI\",\"fontSize\":10,\"fontWeight\":600,\"color\":\"#FFFFFF\"},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"text\":{\"field\":\"Rotulo\"}}},{\"transform\":[{\"filter\":\"datum.DesvioNorm < 0 && datum.DesvioNorm > -0.25\"}],\"mark\":{\"type\":\"text\",\"align\":\"right\",\"baseline\":\"middle\",\"dx\":-7,\"font\":\"Segoe UI\",\"fontSize\":10,\"color\":\"#475467\"},\"encoding\":{\"x\":{\"field\":\"DesvioNorm\",\"type\":\"quantitative\",\"scale\":{\"domain\":[-1.15,1.15]},\"axis\":{\"grid\":false,\"labels\":false}},\"text\":{\"field\":\"Rotulo\"}}}],\"config\":{\"background\":null,\"view\":{\"stroke\":null},\"axis\":{\"domain\":false,\"ticks\":false,\"grid\":false,\"labelFont\":\"Segoe UI\",\"labelFontSize\":11,\"labelColor\":\"#667085\",\"title\":null}}}'"
-                }
-              }
-            },
-            "jsonConfig": {
-              "expr": {
-                "Literal": {
-                  "Value": "'{}'"
-                }
-              }
-            },
-            "provider": {
-              "expr": {
-                "Literal": {
-                  "Value": "'vegaLite'"
-                }
-              }
-            },
-            "renderMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'svg'"
-                }
-              }
-            },
-            "enableTooltips": {
+            "enabled": {
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "enableSelection": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "selectionMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'simple'"
-                }
-              }
-            },
-            "version": {
-              "expr": {
-                "Literal": {
-                  "Value": "'6.4.3'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "stateManagement": [
-        {
-          "properties": {
-            "viewportHeight": {
-              "expr": {
-                "Literal": {
-                  "Value": "250D"
-                }
-              }
-            },
-            "viewportWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "654D"
-                }
-              }
-            },
-            "supportFieldConfiguration": {
-              "expr": {
-                "Literal": {
-                  "Value": "'{\"Area\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"Realizado\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"Orcado\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"Desvio\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"DesvioPct\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false}}'"
-                }
-              }
-            },
-            "denebMetaVersion": {
-              "expr": {
-                "Literal": {
-                  "Value": "'2'"
-                }
-              }
-            },
-            "consolidateFieldParameters": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "developer": [
-        {
-          "properties": {
-            "version": {
-              "expr": {
-                "Literal": {
-                  "Value": "'2.0.0.0'"
                 }
               }
             }
@@ -242,14 +152,14 @@
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "14D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "14D"
                 }
               }
             },
